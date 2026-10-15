@@ -80,55 +80,55 @@ function getCategoryIcon(cat) {
         <Head :title="locale === 'en' ? 'Local Experience & Vendor Marketplace — Turget.id' : 'Marketplace Vendor & Layanan Lokal — Turget.id'" />
 
         <!-- Header Hero -->
-        <section style="background: var(--color-surface-subtle); padding: 4.5rem 0 3rem; border-bottom: 1px solid var(--color-border-subtle);">
+        <section style="background: var(--color-surface-subtle); padding: 2.25rem 0 2rem; border-bottom: 1px solid var(--color-border-subtle);">
             <div class="turget-container">
                 <div style="max-width: 820px;">
-                    <span class="turget-badge" style="margin-bottom: 1rem; background: var(--color-blue-50); color: var(--color-blue-600); border-color: rgba(37,99,235,0.2);">
+                    <span class="turget-badge" style="margin-bottom: 0.65rem; background: var(--color-blue-50); color: var(--color-blue-600); border-color: rgba(37,99,235,0.2);">
                         🏨 🚗 🤿 📷 Mitra Terverifikasi Turget.id
                     </span>
-                    <h1 style="font-family: var(--font-serif); font-size: 2.85rem; font-weight: 700; color: var(--color-navy-950); line-height: 1.2; margin-bottom: 1rem;">
+                    <h1 style="font-family: var(--font-heading); font-size: 1.85rem; font-weight: 700; color: var(--color-navy-950); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
                         {{ locale === 'en' ? 'Verified Local Vendors, Stays & Activities' : 'Penginapan, Rental, Tiket Aktivitas & Jasa Wisata Lokal' }}
                     </h1>
-                    <p style="font-size: 1.15rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 2rem;">
+                    <p style="font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.55; margin-bottom: 1.25rem;">
                         {{ locale === 'en'
                             ? 'Complete your trip with handpicked local accommodations, reliable 4x4 & car rentals, liveaboards, and outdoor adventures.'
                             : 'Lengkapi rencana perjalanan Anda dengan penginapan berlisensi, sewa kendaraan terpercaya, tiket wahana, kapal bahari, hingga dokumentasi foto.' }}
                     </p>
 
                     <!-- View Switcher Tabs -->
-                    <div style="display: inline-flex; background: white; padding: 0.35rem; border-radius: var(--radius-full); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-subtle); margin-bottom: 1.5rem;">
+                    <div style="display: inline-flex; background: white; padding: 0.25rem; border-radius: var(--radius-pill); box-shadow: var(--shadow-xs); border: 1px solid var(--color-border-subtle); margin-bottom: 1.25rem;">
                         <button
                             type="button"
                             @click="switchView('products')"
-                            style="padding: 0.6rem 1.5rem; border-radius: var(--radius-full); font-size: 0.92rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s;"
-                            :style="currentView === 'products' ? 'background: var(--color-blue-600); color: white; box-shadow: var(--shadow-sm);' : 'background: transparent; color: var(--color-navy-800);'"
+                            style="padding: 0.35rem 1rem; border-radius: var(--radius-pill); font-size: 0.82rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s;"
+                            :style="currentView === 'products' ? 'background: var(--color-blue-600); color: white; box-shadow: var(--shadow-xs);' : 'background: transparent; color: var(--color-navy-800);'"
                         >
                             📦 {{ locale === 'en' ? 'All Services & Add-ons' : 'Katalog Layanan & Add-on' }}
                         </button>
                         <button
                             type="button"
                             @click="switchView('vendors')"
-                            style="padding: 0.6rem 1.5rem; border-radius: var(--radius-full); font-size: 0.92rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s;"
-                            :style="currentView === 'vendors' ? 'background: var(--color-blue-600); color: white; box-shadow: var(--shadow-sm);' : 'background: transparent; color: var(--color-navy-800);'"
+                            style="padding: 0.35rem 1rem; border-radius: var(--radius-pill); font-size: 0.82rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s;"
+                            :style="currentView === 'vendors' ? 'background: var(--color-blue-600); color: white; box-shadow: var(--shadow-xs);' : 'background: transparent; color: var(--color-navy-800);'"
                         >
                             🏢 {{ locale === 'en' ? 'Vendor Partners' : 'Penyedia Jasa (Vendors)' }}
                         </button>
                     </div>
 
                     <!-- Search Input -->
-                    <div style="display: flex; gap: 0.75rem; max-width: 650px;">
+                    <div style="display: flex; gap: 0.5rem; max-width: 580px;">
                         <div style="flex: 1; position: relative;">
                             <input
                                 v-model="searchQuery"
                                 type="text"
-                                class="turget-input"
+                                class="turget-form-input"
                                 :placeholder="locale === 'en' ? 'Search by stay name, vehicle, activity or vendor...' : 'Cari villa, rental mobil, diving, atau nama vendor...'"
                                 @keyup.enter="applyFilters"
-                                style="background: white; padding-left: 2.75rem;"
+                                style="background: white; padding-left: 2.25rem; font-size: 0.88rem; padding-top: 0.45rem; padding-bottom: 0.45rem;"
                             />
-                            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.1rem; opacity: 0.5;">🔍</span>
+                            <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.95rem; opacity: 0.5;">🔍</span>
                         </div>
-                        <button type="button" class="turget-btn turget-btn-primary" @click="applyFilters" style="padding: 0 1.75rem;">
+                        <button type="button" class="turget-btn turget-btn-primary turget-btn-sm" @click="applyFilters" style="padding: 0 1.25rem;">
                             {{ t('btn.search', 'Cari') }}
                         </button>
                     </div>
@@ -137,14 +137,14 @@ function getCategoryIcon(cat) {
         </section>
 
         <!-- Categories & Filter Strip -->
-        <div style="background: white; border-bottom: 1px solid var(--color-border-subtle); padding: 1.25rem 0; position: sticky; top: 4.5rem; z-index: 20;">
-            <div class="turget-container" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+        <div style="background: white; border-bottom: 1px solid var(--color-border-subtle); padding: 0.75rem 0; position: sticky; top: 3.75rem; z-index: 20;">
+            <div class="turget-container" style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
                 <!-- Category Pills -->
-                <div style="display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 0.25rem; flex-wrap: wrap;">
+                <div style="display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.15rem; flex-wrap: wrap;">
                     <button
                         type="button"
                         class="turget-badge"
-                        style="cursor: pointer; padding: 0.5rem 1rem; font-size: 0.88rem; transition: all 0.15s;"
+                        style="cursor: pointer; padding: 0.25rem 0.75rem; font-size: 0.76rem; transition: all 0.15s; margin: 0;"
                         :style="selectedCategory === '' ? 'background: var(--color-navy-950); color: white; border-color: var(--color-navy-950);' : 'background: var(--color-surface-subtle); color: var(--color-navy-800);'"
                         @click="selectCategory('')"
                     >
@@ -155,7 +155,7 @@ function getCategoryIcon(cat) {
                         :key="cat.value"
                         type="button"
                         class="turget-badge"
-                        style="cursor: pointer; padding: 0.5rem 1rem; font-size: 0.88rem; transition: all 0.15s;"
+                        style="cursor: pointer; padding: 0.25rem 0.75rem; font-size: 0.76rem; transition: all 0.15s; margin: 0;"
                         :style="selectedCategory === cat.value ? 'background: var(--color-blue-600); color: white; border-color: var(--color-blue-600);' : 'background: var(--color-surface-subtle); color: var(--color-navy-800);'"
                         @click="selectCategory(cat.value)"
                     >

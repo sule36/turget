@@ -31,7 +31,7 @@ const tabs = [
         </Head>
 
         <!-- Country Hero Banner -->
-        <section style="position: relative; background: var(--color-navy-950); color: white; padding: 5rem 0 4rem; overflow: hidden;">
+        <section style="position: relative; background: var(--color-navy-950); color: white; padding: 2.75rem 0 2.25rem; overflow: hidden;">
             <div style="position: absolute; inset: 0; opacity: 0.28;">
                 <img
                     :src="country.cover_image || '/images/destinations/bali_hero.jpg'"
@@ -41,7 +41,7 @@ const tabs = [
             </div>
             <div class="turget-container" style="position: relative; z-index: 2;">
                 <!-- Breadcrumb -->
-                <nav style="display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--color-text-subtle); margin-bottom: 1.5rem;">
+                <nav style="display: flex; gap: 0.4rem; font-size: 0.8rem; color: var(--color-text-subtle); margin-bottom: 1rem;">
                     <Link href="/" style="color: rgba(255,255,255,0.7);">Beranda</Link>
                     <span>/</span>
                     <Link href="/destinations" style="color: rgba(255,255,255,0.7);">Destinasi</Link>
@@ -50,26 +50,26 @@ const tabs = [
                 </nav>
 
                 <div style="max-width: 820px;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                        <span style="font-size: 2rem;">🇮🇩</span>
-                        <span class="turget-badge" style="margin: 0; background: rgba(255,255,255,0.12); color: var(--color-sand-200); border-color: rgba(255,255,255,0.2);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <span style="font-size: 1.5rem;">🇮🇩</span>
+                        <span class="turget-badge" style="margin: 0; background: rgba(255,255,255,0.12); color: var(--color-sand-200); border-color: rgba(255,255,255,0.2); padding: 0.2rem 0.55rem; font-size: 0.72rem;">
                             Negara Kepulauan • Asia Tenggara
                         </span>
                     </div>
 
-                    <h1 style="font-family: var(--font-serif); font-size: 3.5rem; font-weight: 700; line-height: 1.15; margin-bottom: 1rem;">
+                    <h1 style="font-family: var(--font-heading); font-size: 2.35rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.035em; margin-bottom: 0.5rem;">
                         {{ tr(country.name) }}
                     </h1>
 
-                    <p style="font-size: 1.22rem; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 2rem;">
+                    <p style="font-size: 0.98rem; color: rgba(255,255,255,0.9); line-height: 1.55; margin-bottom: 1.25rem;">
                         {{ tr(country.tagline) }}
                     </p>
 
                     <!-- Key Fast Facts Row -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.15);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: var(--radius-md); padding: 0.85rem 1.1rem; border: 1px solid rgba(255,255,255,0.15);">
                         <div>
-                            <div style="font-size: 0.75rem; color: var(--color-sand-200); text-transform: uppercase; font-weight: 700;">Mata Uang</div>
-                            <div style="font-size: 0.95rem; font-weight: 700;">IDR (Rupiah)</div>
+                            <div style="font-size: 0.7rem; color: var(--color-sand-200); text-transform: uppercase; font-weight: 700;">Mata Uang</div>
+                            <div style="font-size: 0.88rem; font-weight: 700;">IDR (Rupiah)</div>
                         </div>
                         <div>
                             <div style="font-size: 0.75rem; color: var(--color-sand-200); text-transform: uppercase; font-weight: 700;">Bahasa</div>

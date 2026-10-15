@@ -61,30 +61,30 @@ function startChatWithGuide(guideUserId) {
                 </div>
 
                 <!-- Trip Details Hero Card -->
-                <div style="background: white; border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-subtle); margin-bottom: 3rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap;">
+                <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-xs); border: 1px solid var(--color-border-subtle); margin-bottom: 1.75rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
                         <div style="max-width: 720px;">
-                            <span class="turget-badge" style="background: var(--color-sand-100); color: var(--color-navy-900); font-weight: 700; margin-bottom: 0.75rem;">
+                            <span class="turget-badge" style="background: var(--color-sand-100); color: var(--color-navy-900); font-weight: 700; margin-bottom: 0.5rem; padding: 0.2rem 0.55rem; font-size: 0.72rem;">
                                 📍 {{ trip.region?.name || 'Indonesia' }}
                             </span>
-                            <h1 style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
+                            <h1 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.5rem; letter-spacing: -0.025em;">
                                 {{ trip.title }}
                             </h1>
-                            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--color-text-muted); font-size: 0.95rem;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 1rem; color: var(--color-text-muted); font-size: 0.86rem;">
                                 <span>📅 <strong>{{ trip.start_date }}</strong> s/d <strong>{{ trip.end_date }}</strong> ({{ trip.duration_days }} Hari)</span>
                                 <span>👥 <strong>{{ trip.adults_count }} Dewasa</strong><span v-if="trip.children_count > 0">, {{ trip.children_count }} Anak</span></span>
                                 <span>🧭 Gaya: <strong style="text-transform: capitalize;">{{ trip.travel_style }}</strong></span>
                             </div>
                         </div>
 
-                        <div style="background: var(--color-surface-subtle); border-radius: var(--radius-lg); padding: 1.5rem; min-width: 260px; text-align: right; border: 1px solid var(--color-border-subtle);">
-                            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-subtle); font-weight: 700;">
+                        <div style="background: var(--color-surface-subtle); border-radius: var(--radius-md); padding: 1rem 1.25rem; min-width: 230px; text-align: right; border: 1px solid var(--color-border-subtle);">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-text-subtle); font-weight: 700;">
                                 {{ locale === 'id' ? 'Target Anggaran' : 'Target Budget' }}
                             </div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--color-blue-600); margin-top: 0.25rem;">
+                            <div style="font-size: 1.25rem; font-weight: 800; color: var(--color-blue-600); margin-top: 0.15rem;">
                                 Rp {{ Number(trip.budget_min || 0).toLocaleString('id-ID') }} – {{ Number(trip.budget_max || 0).toLocaleString('id-ID') }}
                             </div>
-                            <div style="font-size: 0.8rem; color: var(--color-text-subtle); margin-top: 0.25rem;">
+                            <div style="font-size: 0.75rem; color: var(--color-text-subtle); margin-top: 0.15rem;">
                                 {{ trip.proposals?.length || 0 }} {{ locale === 'id' ? 'Proposal Masuk' : 'Proposals Received' }}
                             </div>
                         </div>

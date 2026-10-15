@@ -21,7 +21,7 @@ const { t, tr, locale } = useI18n();
         </Head>
 
         <!-- Region Hero Banner -->
-        <section style="position: relative; background: var(--color-navy-950); color: white; padding: 4.5rem 0 3.5rem; overflow: hidden;">
+        <section style="position: relative; background: var(--color-navy-950); color: white; padding: 2.5rem 0 2rem; overflow: hidden;">
             <div style="position: absolute; inset: 0; opacity: 0.3;">
                 <img
                     :src="region.cover_image || '/images/destinations/bali_hero.jpg'"
@@ -31,7 +31,7 @@ const { t, tr, locale } = useI18n();
             </div>
             <div class="turget-container" style="position: relative; z-index: 2;">
                 <!-- Hierarchical Breadcrumb -->
-                <nav style="display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--color-text-subtle); margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <nav style="display: flex; gap: 0.4rem; font-size: 0.8rem; color: var(--color-text-subtle); margin-bottom: 1rem; flex-wrap: wrap;">
                     <Link href="/" style="color: rgba(255,255,255,0.7);">Beranda</Link>
                     <span>/</span>
                     <Link href="/destinations" style="color: rgba(255,255,255,0.7);">Destinasi</Link>
@@ -48,24 +48,24 @@ const { t, tr, locale } = useI18n();
                 </nav>
 
                 <div style="max-width: 800px;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
-                        <span class="turget-badge" style="margin: 0; background: rgba(255,255,255,0.12); color: var(--color-sand-200); border-color: rgba(255,255,255,0.2);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.65rem;">
+                        <span class="turget-badge" style="margin: 0; background: rgba(255,255,255,0.12); color: var(--color-sand-200); border-color: rgba(255,255,255,0.2); padding: 0.2rem 0.55rem; font-size: 0.72rem;">
                             {{ region.typeLabel ? region.typeLabel(locale) : 'Wilayah' }}
                         </span>
-                        <span v-if="region.latitude" style="font-size: 0.82rem; color: rgba(255,255,255,0.7);">
+                        <span v-if="region.latitude" style="font-size: 0.76rem; color: rgba(255,255,255,0.7);">
                             🌐 {{ Number(region.latitude).toFixed(4) }}, {{ Number(region.longitude).toFixed(4) }}
                         </span>
                     </div>
 
-                    <h1 style="font-family: var(--font-serif); font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 1rem;">
+                    <h1 style="font-family: var(--font-heading); font-size: 2.25rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.035em; margin-bottom: 0.5rem;">
                         {{ tr(region.name) }}
                     </h1>
 
-                    <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.96rem; color: rgba(255,255,255,0.9); line-height: 1.55; margin-bottom: 0.85rem;">
                         {{ tr(region.tagline) }}
                     </p>
 
-                    <p style="font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.65; max-width: 720px;">
+                    <p style="font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.55; max-width: 720px;">
                         {{ tr(region.summary) }}
                     </p>
                 </div>

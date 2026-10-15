@@ -144,15 +144,15 @@ function submitSearch() {
         </section>
 
         <!-- Category Row -->
-        <section style="padding: 2rem 0; border-bottom: 1px solid var(--color-border-subtle); background: white;">
+        <section style="padding: 0.85rem 0; border-bottom: 1px solid var(--color-border-subtle); background: white;">
             <div class="turget-container">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
                     <Link
                         v-for="cat in categories"
                         :key="cat.id"
                         :href="`/destinations?category=${cat.slug}`"
                         class="turget-tag-pill"
-                        style="padding: 0.5rem 1.25rem; font-size: 0.92rem; background: var(--color-surface-subtle);"
+                        style="padding: 0.3rem 0.85rem; font-size: 0.82rem; background: var(--color-surface-subtle);"
                     >
                         <span>{{ tr(cat.name) }}</span>
                     </Link>
@@ -293,24 +293,24 @@ function submitSearch() {
                         :key="city.id"
                         :href="city.parent ? `/destinations/indonesia/${city.parent.slug}/${city.slug}` : `/destinations/indonesia/${city.slug}`"
                         class="turget-card"
-                        style="padding: 1.5rem;"
+                        style="padding: 0.9rem 1rem;"
                     >
-                        <div style="display:flex; align-items:center; gap: 1rem;">
+                        <div style="display:flex; align-items:center; gap: 0.85rem;">
                             <img
                                 :src="city.cover_image || '/images/destinations/bali_hero.jpg'"
                                 :alt="tr(city.name)"
-                                style="width: 4rem; height: 4rem; border-radius: var(--radius-md); object-fit: cover;"
+                                style="width: 3.25rem; height: 3.25rem; border-radius: var(--radius-md); object-fit: cover;"
                             />
                             <div>
-                                <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.2rem;">
+                                <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.15rem; letter-spacing: -0.02em;">
                                     {{ tr(city.name) }}
                                 </h3>
-                                <div style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                <div style="font-size: 0.78rem; color: var(--color-text-muted);">
                                     {{ city.parent ? tr(city.parent.name) : 'Indonesia' }}
                                 </div>
                             </div>
                         </div>
-                        <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-top: 1rem; line-height: 1.5;">
+                        <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 0.65rem; line-height: 1.45;">
                             {{ tr(city.tagline) || tr(city.summary) }}
                         </p>
                     </Link>
@@ -435,19 +435,19 @@ function submitSearch() {
         </section>
 
         <!-- Custom Trip Call To Action -->
-        <section class="turget-container" style="padding-bottom: 5rem;">
-            <div style="background: linear-gradient(135deg, var(--color-blue-600), var(--color-navy-900)); color: white; border-radius: var(--radius-xl); padding: 4rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
-                <div style="max-width: 620px;">
-                    <span class="turget-badge" style="background: rgba(255,255,255,0.15); color: white; border: none;">Custom Trip Request</span>
-                    <h2 style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; margin: 0.75rem 0 0.75rem; line-height: 1.2;">
+        <section class="turget-container" style="padding-bottom: 3rem;">
+            <div style="background: linear-gradient(135deg, var(--color-blue-600), var(--color-navy-900)); color: white; border-radius: 16px; padding: 2.25rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="max-width: 600px;">
+                    <span class="turget-badge" style="background: rgba(255,255,255,0.15); color: white; border: none; margin-bottom: 0.5rem;">Custom Trip Request</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0.4rem 0 0.5rem; line-height: 1.25; letter-spacing: -0.025em;">
                         Ingin Rencana Perjalanan yang Dibuat Khusus Sesuai Keinginan Anda?
                     </h2>
-                    <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.6;">
+                    <p style="color: rgba(255,255,255,0.88); font-size: 0.92rem; line-height: 1.55;">
                         Tentukan destinasi, durasi, dan preferensi Anda. Dapatkan proposal penawaran langsung dari tour guide lokal berlisensi kami.
                     </p>
                 </div>
                 <div>
-                    <Link href="/destinations" class="turget-btn turget-btn-lg" style="background: white; color: var(--color-navy-950); font-weight: 700; box-shadow: var(--shadow-lg);">
+                    <Link href="/destinations" class="turget-btn turget-btn-lg" style="background: white; color: var(--color-navy-950); font-weight: 700; box-shadow: var(--shadow-md);">
                         Mulai Buat Perjalanan →
                     </Link>
                 </div>

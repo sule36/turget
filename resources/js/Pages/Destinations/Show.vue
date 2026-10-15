@@ -39,10 +39,10 @@ function formatPrice(amount) {
         </Head>
 
         <!-- Destination Hero Header -->
-        <section style="background: linear-gradient(180deg, var(--color-sand-100) 0%, var(--color-sand-50) 100%); padding: 3rem 0 2rem; border-bottom: 1px solid var(--color-border-subtle);">
+        <section style="background: linear-gradient(180deg, var(--color-sand-100) 0%, var(--color-sand-50) 100%); padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--color-border-subtle);">
             <div class="turget-container">
                 <!-- Breadcrumbs -->
-                <nav style="display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 1.25rem; flex-wrap: wrap;">
+                <nav style="display: flex; gap: 0.4rem; font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.85rem; flex-wrap: wrap;">
                     <Link href="/">Beranda</Link>
                     <span>/</span>
                     <Link href="/destinations">Destinasi</Link>
@@ -58,40 +58,40 @@ function formatPrice(amount) {
                     <span style="color: var(--color-navy-950); font-weight: 700;">{{ tr(destination.name) }}</span>
                 </nav>
 
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
                     <div style="max-width: 780px;">
-                        <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
                             <span
                                 v-for="cat in destination.categories"
                                 :key="cat.id"
                                 class="turget-badge"
-                                style="margin: 0; background: var(--color-blue-50); color: var(--color-blue-600);"
+                                style="margin: 0; background: var(--color-blue-50); color: var(--color-blue-600); padding: 0.2rem 0.55rem; font-size: 0.72rem;"
                             >
                                 {{ tr(cat.name) }}
                             </span>
-                            <span class="turget-badge" style="margin: 0; background: var(--color-emerald-50); color: var(--color-emerald-600); border-color: rgba(16,185,129,0.3);">
+                            <span class="turget-badge" style="margin: 0; background: var(--color-emerald-50); color: var(--color-emerald-600); border-color: rgba(16,185,129,0.3); padding: 0.2rem 0.55rem; font-size: 0.72rem;">
                                 ✓ Terverifikasi Turget.id
                             </span>
                         </div>
 
-                        <h1 style="font-family: var(--font-serif); font-size: 3rem; font-weight: 700; color: var(--color-navy-950); line-height: 1.2; margin-bottom: 0.75rem;">
+                        <h1 style="font-family: var(--font-heading); font-size: 2.15rem; font-weight: 800; color: var(--color-navy-950); line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 0.4rem;">
                             {{ tr(destination.name) }}
                         </h1>
 
-                        <p style="font-size: 1.2rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                        <p style="font-size: 0.98rem; color: var(--color-text-muted); line-height: 1.55; margin-bottom: 0.75rem;">
                             {{ tr(destination.tagline) }}
                         </p>
 
-                        <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.92rem; color: var(--color-text-muted);">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted);">
                             <span>📍 {{ destination.address }}</span>
                         </div>
                     </div>
 
                     <!-- CTA Box -->
-                    <div style="background: white; border-radius: var(--radius-xl); padding: 1.5rem 1.75rem; box-shadow: var(--shadow-md); border: 1px solid var(--color-border-subtle); min-width: 280px; text-align: center;">
-                        <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.35rem;">Rating Pengunjung</div>
-                        <div style="font-size: 1.8rem; font-weight: 800; color: var(--color-navy-950); margin-bottom: 1rem;">
-                            ★ 4.9 <span style="font-size: 0.9rem; font-weight: 500; color: var(--color-text-muted);">(128 Ulasan Terverifikasi)</span>
+                    <div style="background: white; border-radius: var(--radius-lg); padding: 1.15rem 1.25rem; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-subtle); min-width: 260px; text-align: center;">
+                        <div style="font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Rating Pengunjung</div>
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--color-navy-950); margin-bottom: 0.75rem;">
+                            ★ 4.9 <span style="font-size: 0.82rem; font-weight: 500; color: var(--color-text-muted);">(128 Ulasan)</span>
                         </div>
                         <a href="#booking-cta" class="turget-btn turget-btn-primary" style="width: 100%;">
                             Pesan Tour Guide →

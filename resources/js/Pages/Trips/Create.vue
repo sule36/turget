@@ -80,17 +80,17 @@ function submit() {
     <PublicLayout>
         <Head :title="locale === 'id' ? 'Rancang Trip Kustom — Turget.id' : 'Custom Trip Planner — Turget.id'" />
 
-        <div style="background: var(--color-surface-subtle); padding: 3rem 0 6rem;">
+        <div style="background: var(--color-surface-subtle); padding: 2.25rem 0 3.5rem;">
             <div class="turget-container">
                 <!-- Header Breadcrumb & Title -->
-                <div style="text-align: center; max-width: 680px; margin: 0 auto 3rem;">
-                    <span class="turget-badge" style="background: var(--color-blue-50); color: var(--color-blue-600); margin-bottom: 0.75rem;">
+                <div style="text-align: center; max-width: 680px; margin: 0 auto 1.75rem;">
+                    <span class="turget-badge" style="background: var(--color-blue-50); color: var(--color-blue-600); margin-bottom: 0.5rem;">
                         ✨ {{ locale === 'id' ? 'Custom Trip Builder' : 'Custom Trip Builder' }}
                     </span>
-                    <h1 style="font-family: var(--font-serif); font-size: 2.25rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.75rem;">
+                    <h1 style="font-family: var(--font-heading); font-size: 1.85rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.5rem; letter-spacing: -0.025em;">
                         {{ locale === 'id' ? 'Wujudkan Perjalanan Impian Anda' : 'Design Your Bespoke Journey' }}
                     </h1>
-                    <p style="color: var(--color-text-muted); font-size: 1.05rem;">
+                    <p style="color: var(--color-text-muted); font-size: 0.92rem; line-height: 1.55;">
                         {{ locale === 'id'
                             ? 'Isi rencana trip Anda dalam 3 langkah mudah. Tour guide lokal terverifikasi kami akan bersaing memberikan proposal & penawaran terbaik.'
                             : 'Specify your travel desires. Verified local tour guides will pitch personalized itineraries and competitive quotes.' }}
@@ -98,15 +98,15 @@ function submit() {
                 </div>
 
                 <!-- Wizard Progress Indicator -->
-                <div style="display: flex; justify-content: center; margin-bottom: 3rem;">
-                    <div style="display: flex; align-items: center; gap: 1rem; background: white; padding: 0.75rem 1.75rem; border-radius: var(--radius-pill); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-subtle);">
+                <div style="display: flex; justify-content: center; margin-bottom: 1.75rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; background: white; padding: 0.45rem 1.25rem; border-radius: var(--radius-pill); box-shadow: var(--shadow-xs); border: 1px solid var(--color-border-subtle);">
                         <button
                             type="button"
                             @click="currentStep = 1"
-                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.9rem;"
+                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.82rem;"
                             :style="{ color: currentStep === 1 ? 'var(--color-blue-600)' : 'var(--color-text-subtle)' }"
                         >
-                            <span style="width: 1.6rem; height: 1.6rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;"
+                            <span style="width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;"
                                   :style="{ background: currentStep === 1 ? 'var(--color-blue-600)' : 'var(--color-surface-muted)', color: currentStep === 1 ? 'white' : 'var(--color-text-muted)' }">
                                 1
                             </span>
