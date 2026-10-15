@@ -1,0 +1,1260 @@
+/* ==========================================================================
+   TURGET.ID — LUXURY TRAVEL DISCOVERY & EXPERIENCE MARKETPLACE DESIGN SYSTEM
+   Vanilla CSS — Tailored Color System, Modern Typography, Fluid Elevation
+   ========================================================================== */
+
+:root {
+    /* Brand Palettes */
+    --color-navy-950: #07121D;
+    --color-navy-900: #0B1B2B;
+    --color-navy-800: #132A40;
+    --color-navy-700: #1D3D5D;
+    --color-navy-600: #29537D;
+
+    --color-blue-600: #2563EB;
+    --color-blue-500: #3B82F6;
+    --color-blue-400: #60A5FA;
+    --color-blue-50:  #EFF6FF;
+
+    --color-sand-50:  #FAF8F5;
+    --color-sand-100: #F3EEE3;
+    --color-sand-200: #E6DCB8;
+    --color-sand-300: #D4C3A3;
+
+    --color-amber-500: #F59E0B;
+    --color-amber-600: #D97706;
+    --color-amber-50:  #FFFBEB;
+
+    --color-emerald-500: #10B981;
+    --color-emerald-600: #059669;
+    --color-emerald-50:  #ECFDF5;
+
+    --color-coral-500: #F43F5E;
+    --color-coral-600: #E11D48;
+
+    --color-surface-white: #FFFFFF;
+    --color-surface-subtle: #F8FAFC;
+    --color-surface-muted:  #F1F5F9;
+    --color-border-subtle:  #E2E8F0;
+    --color-border-hover:   #CBD5E1;
+
+    --color-text-main:   #0F172A;
+    --color-text-muted:  #64748B;
+    --color-text-subtle: #94A3B8;
+    --color-text-light:  #F8FAFC;
+
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+
+    /* Elevation & Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(11, 27, 43, 0.05);
+    --shadow-sm: 0 2px 8px -1px rgba(11, 27, 43, 0.08), 0 1px 3px 0 rgba(11, 27, 43, 0.04);
+    --shadow-md: 0 6px 20px -3px rgba(11, 27, 43, 0.1), 0 3px 8px -2px rgba(11, 27, 43, 0.05);
+    --shadow-lg: 0 14px 34px -4px rgba(11, 27, 43, 0.12), 0 6px 14px -3px rgba(11, 27, 43, 0.06);
+    --shadow-xl: 0 24px 50px -6px rgba(11, 27, 43, 0.18);
+    --shadow-glow: 0 0 24px rgba(37, 99, 235, 0.25);
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+
+    /* Layout Constraints */
+    --container-max: 1280px;
+    --transition-base: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body.turget-body {
+    font-family: var(--font-sans);
+    color: var(--color-text-main);
+    background-color: var(--color-sand-50);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+img, picture, video {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+/* Utilities */
+.turget-container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.turget-serif {
+    font-family: var(--font-serif);
+}
+
+/* ==========================================================================
+   NAVIGATION BAR (STICKY & GLASSMORPHISM)
+   ========================================================================== */
+.turget-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    transition: var(--transition-base);
+}
+
+.turget-navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.75rem;
+    gap: 1.5rem;
+}
+
+.turget-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--color-navy-950);
+    letter-spacing: -0.03em;
+}
+
+.turget-brand-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(135deg, var(--color-blue-600), var(--color-navy-800));
+    color: white;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.turget-brand-dot {
+    color: var(--color-blue-600);
+}
+
+.turget-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.turget-nav-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-navy-700);
+    padding: 0.5rem 0.25rem;
+    position: relative;
+}
+
+.turget-nav-link:hover,
+.turget-nav-link.is-active {
+    color: var(--color-blue-600);
+}
+
+.turget-nav-link.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.25rem;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-blue-600);
+    border-radius: var(--radius-pill);
+}
+
+.turget-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Language Switcher Pill */
+.turget-lang-pill {
+    display: flex;
+    align-items: center;
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 3px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.turget-lang-btn {
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: var(--transition-base);
+}
+
+.turget-lang-btn.is-active {
+    background: var(--color-surface-white);
+    color: var(--color-navy-950);
+    box-shadow: var(--shadow-xs);
+}
+
+/* Buttons */
+.turget-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-base);
+    white-space: nowrap;
+}
+
+.turget-btn-primary {
+    background: linear-gradient(135deg, var(--color-blue-600), #1D4ED8);
+    color: white;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+}
+
+.turget-btn-primary:hover {
+    background: linear-gradient(135deg, #1D4ED8, #1E40AF);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38);
+    transform: translateY(-1px);
+}
+
+.turget-btn-secondary {
+    background: var(--color-surface-white);
+    color: var(--color-navy-800);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: var(--shadow-xs);
+}
+
+.turget-btn-secondary:hover {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-border-hover);
+    transform: translateY(-1px);
+}
+
+.turget-btn-dark {
+    background: var(--color-navy-900);
+    color: white;
+}
+
+.turget-btn-dark:hover {
+    background: var(--color-navy-800);
+    transform: translateY(-1px);
+}
+
+.turget-btn-sm {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+}
+
+.turget-btn-lg {
+    padding: 0.85rem 1.85rem;
+    font-size: 1.05rem;
+    border-radius: var(--radius-lg);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.turget-hero {
+    position: relative;
+    padding: 4.5rem 0 6.5rem;
+    background: linear-gradient(180deg, rgba(250, 248, 245, 0.8) 0%, rgba(243, 238, 227, 0.95) 100%);
+    overflow: hidden;
+}
+
+.turget-hero-bg-accent {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0) 70%);
+    top: -150px;
+    right: -100px;
+    pointer-events: none;
+}
+
+.turget-hero-content {
+    max-width: 840px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.turget-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--color-surface-white);
+    color: var(--color-blue-600);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    box-shadow: var(--shadow-xs);
+    margin-bottom: 1.5rem;
+}
+
+.turget-hero-title {
+    font-family: var(--font-serif);
+    font-size: 3.4rem;
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+}
+
+.turget-hero-subtitle {
+    font-size: 1.18rem;
+    color: var(--color-text-muted);
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.65;
+}
+
+/* ==========================================================================
+   SEARCH BAR & AUTOCOMPLETE COMBOBOX
+   ========================================================================== */
+.turget-search-box {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--color-surface-white);
+    padding: 0.65rem 0.75rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl), 0 0 0 1px rgba(11, 27, 43, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.turget-search-icon {
+    color: var(--color-blue-600);
+    margin-left: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.turget-search-input {
+    flex: 1;
+    font-size: 1.05rem;
+    padding: 0.6rem 0.5rem;
+    color: var(--color-text-main);
+}
+
+.turget-search-input::placeholder {
+    color: var(--color-text-subtle);
+}
+
+.turget-search-dropdown {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: 0;
+    right: 0;
+    background: var(--color-surface-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--color-border-subtle);
+    padding: 0.75rem;
+    z-index: 100;
+    max-height: 380px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.turget-search-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.turget-search-item:hover {
+    background: var(--color-surface-subtle);
+}
+
+.turget-search-item-thumb {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+.turget-search-item-info {
+    flex: 1;
+}
+
+.turget-search-item-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-navy-950);
+}
+
+.turget-search-item-sub {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+.turget-search-tag-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-blue-50);
+    color: var(--color-blue-600);
+}
+
+/* Quick Tags */
+.turget-quick-tags {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+}
+
+.turget-tag-pill {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    padding: 0.25rem 0.8rem;
+    border-radius: var(--radius-pill);
+    color: var(--color-navy-800);
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+
+.turget-tag-pill:hover {
+    background: var(--color-surface-white);
+    border-color: var(--color-blue-500);
+    color: var(--color-blue-600);
+}
+
+/* ==========================================================================
+   SECTIONS & GRIDS
+   ========================================================================== */
+.turget-section {
+    padding: 5rem 0;
+}
+
+.turget-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.75rem;
+    gap: 1.5rem;
+}
+
+.turget-section-title {
+    font-family: var(--font-serif);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.turget-section-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    max-width: 620px;
+}
+
+.turget-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.turget-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.turget-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   DESTINATION CARDS
+   ========================================================================== */
+.turget-card {
+    background: var(--color-surface-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.turget-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+.turget-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background-color: var(--color-navy-900);
+}
+
+.turget-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.turget-card:hover .turget-card-img {
+    transform: scale(1.06);
+}
+
+.turget-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 18, 29, 0) 45%, rgba(7, 18, 29, 0.75) 100%);
+    pointer-events: none;
+}
+
+.turget-card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    box-shadow: var(--shadow-xs);
+}
+
+.turget-card-score {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(11, 27, 43, 0.8);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.turget-card-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.turget-card-location {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-blue-600);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.turget-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+}
+
+.turget-card-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.turget-card-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.turget-card-cta {
+    font-weight: 700;
+    color: var(--color-blue-600);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: var(--transition-base);
+}
+
+.turget-card:hover .turget-card-cta {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   PROVINCE & REGION CARDS
+   ========================================================================== */
+.turget-region-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.75rem;
+    color: white;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-smooth);
+}
+
+.turget-region-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.turget-region-card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.turget-region-card:hover .turget-region-card-img {
+    transform: scale(1.08);
+}
+
+.turget-region-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 18, 29, 0.1) 20%, rgba(7, 18, 29, 0.88) 100%);
+}
+
+.turget-region-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.turget-region-card-type {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-sand-200);
+    margin-bottom: 0.3rem;
+}
+
+.turget-region-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+}
+
+.turget-region-card-count {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   TRUST & SAFETY PILLARS (PRD §15)
+   ========================================================================== */
+.turget-trust-section {
+    background: var(--color-navy-950);
+    color: white;
+    border-radius: var(--radius-xl);
+    padding: 4.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    margin-bottom: 5rem;
+}
+
+.turget-trust-badge {
+    background: rgba(37, 99, 235, 0.2);
+    color: var(--color-blue-400);
+    border-color: rgba(37, 99, 235, 0.4);
+}
+
+.turget-trust-title {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 3.5rem;
+    max-width: 720px;
+}
+
+.turget-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+}
+
+.turget-trust-item-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: var(--color-blue-400);
+}
+
+.turget-trust-item-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+}
+
+.turget-trust-item-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-subtle);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   ARTICLE / EDITORIAL SECTION
+   ========================================================================== */
+.turget-article-card {
+    background: var(--color-surface-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+.turget-article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.turget-article-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.turget-article-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.turget-article-meta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.turget-article-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    line-height: 1.35;
+    margin-bottom: 0.65rem;
+}
+
+.turget-article-excerpt {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.turget-footer {
+    background: var(--color-navy-950);
+    color: white;
+    padding: 5rem 0 2.5rem;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.turget-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.turget-footer-brand-desc {
+    color: var(--color-text-subtle);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-top: 1rem;
+    max-width: 360px;
+}
+
+.turget-footer-col-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 1.25rem;
+}
+
+.turget-footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.turget-footer-link {
+    color: var(--color-text-subtle);
+    font-size: 0.92rem;
+    transition: var(--transition-base);
+}
+
+.turget-footer-link:hover {
+    color: white;
+    padding-left: 4px;
+}
+
+.turget-footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+}
+
+/* ==========================================================================
+   ADMIN CMS STYLES
+   ========================================================================== */
+.turget-admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--color-surface-subtle);
+}
+
+.turget-admin-sidebar {
+    width: 260px;
+    background: var(--color-navy-950);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem 1.25rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.turget-admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.turget-admin-header {
+    height: 4.5rem;
+    background: var(--color-surface-white);
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.turget-admin-content {
+    padding: 2.25rem 2rem;
+    flex: 1;
+}
+
+.turget-admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-md);
+    color: var(--color-text-subtle);
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    transition: var(--transition-base);
+}
+
+.turget-admin-nav-item:hover,
+.turget-admin-nav-item.is-active {
+    background: rgba(37, 99, 235, 0.15);
+    color: white;
+}
+
+/* Status Badges */
+.turget-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.turget-status-draft {
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+}
+
+.turget-status-in_review {
+    background: var(--color-amber-50);
+    color: var(--color-amber-600);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.turget-status-approved {
+    background: var(--color-blue-50);
+    color: var(--color-blue-600);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.turget-status-published {
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-600);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.turget-status-archived {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+/* Flash Toasts */
+.turget-flash {
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.turget-flash-success {
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-600);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.turget-flash-error {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* Admin Tables & Forms */
+.turget-admin-card {
+    background: var(--color-surface-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: var(--shadow-xs);
+    padding: 1.75rem;
+}
+
+.turget-table-container {
+    background: var(--color-surface-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-subtle);
+    overflow: hidden;
+    box-shadow: var(--shadow-xs);
+}
+
+.turget-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.turget-table th {
+    background: var(--color-surface-subtle);
+    padding: 0.9rem 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.turget-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-navy-950);
+    vertical-align: middle;
+}
+
+.turget-table tr:last-child td {
+    border-bottom: none;
+}
+
+.turget-table tr:hover td {
+    background: rgba(248, 246, 240, 0.5);
+}
+
+.turget-form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-navy-950);
+    margin-bottom: 0.35rem;
+}
+
+.turget-form-hint {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 0.3rem;
+}
+
+.turget-form-error {
+    font-size: 0.8rem;
+    color: var(--color-coral-600);
+    margin-top: 0.3rem;
+    font-weight: 600;
+}
+
+.turget-form-input,
+.turget-form-select,
+.turget-form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-white);
+    color: var(--color-navy-950);
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    transition: var(--transition-base);
+}
+
+.turget-form-input:focus,
+.turget-form-select:focus,
+.turget-form-textarea:focus {
+    border-color: var(--color-blue-600);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.turget-tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    margin-bottom: 1.5rem;
+}
+
+.turget-tab-btn {
+    padding: 0.65rem 1.25rem;
+    border: none;
+    background: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-base);
+}
+
+.turget-tab-btn:hover {
+    color: var(--color-navy-950);
+}
+
+.turget-tab-btn.is-active {
+    color: var(--color-blue-600);
+    border-bottom-color: var(--color-blue-600);
+}
+
+.turget-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: var(--color-surface-white);
+    border-top: 1px solid var(--color-border-subtle);
+    font-size: 0.85rem;
+}
+
+.turget-pagination-links {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.turget-pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-subtle);
+    color: var(--color-navy-950);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+
+.turget-pagination-btn:hover {
+    background: var(--color-surface-subtle);
+}
+
+.turget-pagination-btn.is-active {
+    background: var(--color-blue-600);
+    color: white;
+    border-color: var(--color-blue-600);
+}
+
+.turget-pagination-btn.is-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+    .turget-hero-title {
+        font-size: 2.75rem;
+    }
+    .turget-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .turget-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .turget-trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .turget-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .turget-hero-title {
+        font-size: 2.2rem;
+    }
+    .turget-nav-links {
+        display: none;
+    }
+    .turget-grid-3,
+    .turget-grid-4,
+    .turget-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .turget-trust-grid {
+        grid-template-columns: 1fr;
+    }
+    .turget-footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .turget-admin-layout {
+        flex-direction: column;
+    }
+    .turget-admin-sidebar {
+        width: 100%;
+    }
+}
