@@ -1,6 +1,6 @@
 <script setup>
 import { Link, usePage, router } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useI18n } from '@/composables/useI18n';
 
 const page = usePage();
@@ -10,6 +10,11 @@ const authUser = computed(() => page.props.auth?.user);
 const flash = computed(() => page.props.flash || {});
 
 const showMobileNav = ref(false);
+
+// Auto-close mobile drawer when route changes
+watch(() => page.url, () => {
+    showMobileNav.value = false;
+});
 
 function switchLang(lang) {
     if (lang === locale.value) return;
@@ -27,12 +32,12 @@ function switchLang(lang) {
             <div class="turget-container">
                 <div class="turget-navbar-inner">
                     <!-- Brand Logo -->
-                    <Link href="/" class="turget-brand">
+                    <Link href="/" class="turget-brand" @click="showMobileNav = false">
                         <span class="turget-brand-icon">T</span>
                         <span>turget<span class="turget-brand-dot">.id</span></span>
                     </Link>
 
-                    <!-- Main Navigation Links -->
+                    <!-- Main Navigation Links (Desktop) -->
                     <nav class="turget-nav-links" aria-label="Main Navigation">
                         <Link href="/" class="turget-nav-link" :class="{ 'is-active': $page.url === '/' }">
                             {{ t('nav.home', 'Beranda') }}
@@ -84,62 +89,177 @@ function switchLang(lang) {
 
                     <!-- Right Actions -->
                     <div class="turget-nav-actions">
-                        <!-- Language Switcher Pill -->
-                        <div class="turget-lang-pill" aria-label="Language Switcher">
-                            <button
-                                type="button"
-                                class="turget-lang-btn"
-                                :class="{ 'is-active': locale === 'id' }"
-                                @click="switchLang('id')"
-                            >
-                                ID
-                            </button>
-                            <button
-                                type="button"
-                                class="turget-lang-btn"
-                                :class="{ 'is-active': locale === 'en' }"
-                                @click="switchLang('en')"
-                            >
-                                EN
-                            </button>
+                        <!-- Desktop Actions -->
+                        <div class="turget-desktop-nav-actions">
+                            <!-- Language Switcher Pill -->
+                            <div class="turget-lang-pill" aria-label="Language Switcher">
+                                <button
+                                    type="button"
+                                    class="turget-lang-btn"
+                                    :class="{ 'is-active': locale === 'id' }"
+                                    @click="switchLang('id')"
+                                >
+                                    ID
+                                </button>
+                                <button
+                                    type="button"
+                                    class="turget-lang-btn"
+                                    :class="{ 'is-active': locale === 'en' }"
+                                    @click="switchLang('en')"
+                                >
+                                    EN
+                                </button>
+                            </div>
+
+                            <!-- User State (Desktop) -->
+                            <template v-if="authUser">
+                                <div class="turget-user-chip" style="display: flex; align-items: center; gap: 0.65rem;">
+                                    <Link href="/my-trips" style="text-decoration: none; font-size: 0.82rem; font-weight: 700; color: var(--color-navy-950);">
+                                        {{ authUser.name.split(' ')[0] }}
+                                    </Link>
+                                    <Link
+                                        v-if="authUser?.roles?.includes('tour_guide') || authUser?.roles?.includes('vendor')"
+                                        href="/payouts"
+                                        class="turget-btn turget-btn-secondary turget-btn-sm"
+                                        style="padding: 0.25rem 0.5rem; font-size: 0.72rem;"
+                                    >
+                                        💰 Dompet
+                                    </Link>
+                                    <Link
+                                        href="/logout"
+                                        method="post"
+                                        as="button"
+                                        class="turget-btn turget-btn-secondary turget-btn-sm"
+                                    >
+                                        {{ t('nav.logout', 'Keluar') }}
+                                    </Link>
+                                </div>
+                            </template>
+                            <template v-else>
+                                <Link href="/login" class="turget-btn turget-btn-secondary turget-btn-sm">
+                                    {{ t('nav.login', 'Masuk') }}
+                                </Link>
+                                <Link href="/register" class="turget-btn turget-btn-primary turget-btn-sm">
+                                    {{ t('nav.register', 'Daftar') }}
+                                </Link>
+                            </template>
                         </div>
 
-                        <!-- User State -->
-                        <template v-if="authUser">
-                            <div class="turget-user-chip" style="display: flex; align-items: center; gap: 0.75rem;">
-                                <Link href="/my-trips" style="text-decoration: none; font-size: 0.85rem; font-weight: 700; color: var(--color-navy-950);">
-                                    {{ authUser.name.split(' ')[0] }}
-                                </Link>
-                                <Link
-                                    v-if="authUser?.roles?.includes('tour_guide') || authUser?.roles?.includes('vendor')"
-                                    href="/payouts"
-                                    class="turget-btn turget-btn-secondary turget-btn-sm"
-                                    style="padding: 0.25rem 0.5rem; font-size: 0.75rem;"
-                                >
-                                    💰 Dompet
-                                </Link>
-                                <Link
-                                    href="/logout"
-                                    method="post"
-                                    as="button"
-                                    class="turget-btn turget-btn-secondary turget-btn-sm"
-                                >
-                                    {{ t('nav.logout', 'Keluar') }}
-                                </Link>
+                        <!-- Mobile Hamburger Button -->
+                        <button
+                            type="button"
+                            class="turget-menu-toggle"
+                            :class="{ 'is-active': showMobileNav }"
+                            @click="showMobileNav = !showMobileNav"
+                            :aria-label="showMobileNav ? 'Tutup menu' : 'Buka menu'"
+                        >
+                            <span class="turget-menu-bar"></span>
+                            <span class="turget-menu-bar"></span>
+                            <span class="turget-menu-bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div v-if="showMobileNav" class="turget-mobile-drawer">
+                <div class="turget-mobile-links">
+                    <Link href="/" class="turget-mobile-link" :class="{ 'is-active': $page.url === '/' }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">🏠</span>
+                        <span>{{ t('nav.home', 'Beranda') }}</span>
+                    </Link>
+                    <Link href="/destinations" class="turget-mobile-link" :class="{ 'is-active': $page.url.startsWith('/destinations') || $page.url.startsWith('/places') }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">🏖️</span>
+                        <span>{{ t('nav.destinations', 'Destinasi') }}</span>
+                    </Link>
+                    <Link href="/guides" class="turget-mobile-link" :class="{ 'is-active': $page.url.startsWith('/guides') }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">🧭</span>
+                        <span>{{ t('nav.tour_guides', 'Tour Guide') }}</span>
+                    </Link>
+                    <Link href="/vendors" class="turget-mobile-link" :class="{ 'is-active': $page.url.startsWith('/vendors') }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">🏨</span>
+                        <span>{{ t('nav.vendors', 'Layanan & Vendor') }}</span>
+                    </Link>
+                    <Link href="/articles" class="turget-mobile-link" :class="{ 'is-active': $page.url.startsWith('/articles') }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">📖</span>
+                        <span>{{ t('nav.articles', 'Inspirasi & Panduan') }}</span>
+                    </Link>
+                    <Link href="/trips/plan" class="turget-mobile-link turget-mobile-link-highlight" :class="{ 'is-active': $page.url === '/trips/plan' }" @click="showMobileNav = false">
+                        <span class="turget-mobile-icon">✨</span>
+                        <span>{{ locale === 'id' ? 'Rencanakan Trip Kustom' : 'Plan a Custom Trip' }}</span>
+                    </Link>
+                </div>
+
+                <div class="turget-mobile-divider"></div>
+
+                <!-- User Section / Auth Actions in Mobile Drawer -->
+                <div v-if="authUser" class="turget-mobile-user-section">
+                    <div class="turget-mobile-user-card">
+                        <div class="turget-mobile-avatar">{{ authUser.name.charAt(0) }}</div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 700; font-size: 0.92rem; color: var(--color-navy-950); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                {{ authUser.name }}
                             </div>
-                        </template>
-                        <template v-else>
-                            <Link href="/login" class="turget-btn turget-btn-secondary turget-btn-sm">
-                                {{ t('nav.login', 'Masuk') }}
-                            </Link>
-                            <Link href="/register" class="turget-btn turget-btn-primary turget-btn-sm">
-                                {{ t('nav.register', 'Daftar') }}
-                            </Link>
-                        </template>
+                            <div style="font-size: 0.78rem; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                {{ authUser.email }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="turget-mobile-user-links">
+                        <Link href="/my-trips" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            🎒 {{ locale === 'id' ? 'Trip Saya' : 'My Trips' }}
+                        </Link>
+                        <Link href="/my-bookings" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            🛡️ {{ locale === 'id' ? 'Pesanan & Booking' : 'My Bookings' }}
+                        </Link>
+                        <Link href="/chat" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            💬 {{ locale === 'id' ? 'Pesan & Diskusi' : 'Messages' }}
+                        </Link>
+                        <Link v-if="authUser?.roles?.includes('tour_guide') || authUser?.roles?.includes('vendor')" href="/payouts" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            💰 {{ locale === 'id' ? 'Dompet & Pencairan' : 'Payouts' }}
+                        </Link>
+                        <Link v-if="authUser?.roles?.includes('vendor')" href="/vendor/dashboard" class="turget-mobile-sublink" style="color: var(--color-blue-600); font-weight: 700;" @click="showMobileNav = false">
+                            🏨 Portal Vendor
+                        </Link>
+                        <Link v-if="authUser?.roles?.includes('tour_guide')" href="/guide/dashboard" class="turget-mobile-sublink" style="color: var(--color-blue-600); font-weight: 700;" @click="showMobileNav = false">
+                            🧭 Portal Guide
+                        </Link>
+                        <Link v-if="authUser?.is_admin" href="/admin" class="turget-mobile-sublink" style="color: var(--color-blue-600); font-weight: 700;" @click="showMobileNav = false">
+                            🛡️ Admin CMS
+                        </Link>
+                        <Link href="/logout" method="post" as="button" class="turget-btn turget-btn-secondary" style="width: 100%; margin-top: 0.5rem; justify-content: center;" @click="showMobileNav = false">
+                            {{ t('nav.logout', 'Keluar') }}
+                        </Link>
+                    </div>
+                </div>
+
+                <div v-else class="turget-mobile-auth-actions">
+                    <Link href="/login" class="turget-btn turget-btn-secondary" style="width: 100%; justify-content: center;" @click="showMobileNav = false">
+                        {{ t('nav.login', 'Masuk') }}
+                    </Link>
+                    <Link href="/register" class="turget-btn turget-btn-primary" style="width: 100%; justify-content: center;" @click="showMobileNav = false">
+                        {{ t('nav.register', 'Daftar Sekarang') }}
+                    </Link>
+                </div>
+
+                <!-- Language Selection in Mobile Drawer -->
+                <div class="turget-mobile-lang-row">
+                    <span style="font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted);">Pilih Bahasa:</span>
+                    <div class="turget-lang-pill">
+                        <button type="button" class="turget-lang-btn" :class="{ 'is-active': locale === 'id' }" @click="switchLang('id')">ID</button>
+                        <button type="button" class="turget-lang-btn" :class="{ 'is-active': locale === 'en' }" @click="switchLang('en')">EN</button>
                     </div>
                 </div>
             </div>
         </header>
+
+        <!-- Mobile Drawer Backdrop Overlay -->
+        <div
+            v-if="showMobileNav"
+            class="turget-mobile-backdrop"
+            @click="showMobileNav = false"
+        ></div>
 
         <!-- Flash Notices -->
         <div v-if="flash.success || flash.error" class="turget-container" style="margin-top: 1.25rem;">
