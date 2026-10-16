@@ -1473,6 +1473,100 @@ button, input, select, textarea {
 
 
 /* ==========================================================================
+   WHATSAPP CONCIERGE FLOATING WIDGET
+   ========================================================================== */
+.turget-wa-concierge {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 40;
+}
+
+.turget-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    padding: 0.5rem 1.1rem 0.5rem 0.65rem;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(18, 140, 126, 0.35);
+    transition: var(--transition-base);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.turget-wa-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(18, 140, 126, 0.45);
+    background: linear-gradient(135deg, #2ae06d, #0f7a6d);
+    color: white;
+}
+
+.turget-wa-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.turget-wa-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.15;
+}
+
+.turget-wa-label {
+    font-size: 0.72rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.turget-wa-sub {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.turget-wa-online-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ADE80;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    top: 6px;
+    left: 28px;
+}
+
+@media (max-width: 640px) {
+    .turget-wa-concierge {
+        bottom: 1.15rem;
+        right: 1.15rem;
+    }
+    .turget-wa-btn {
+        padding: 0;
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        justify-content: center;
+    }
+    .turget-wa-text {
+        display: none;
+    }
+    .turget-wa-online-dot {
+        top: 4px;
+        right: 4px;
+        left: auto;
+    }
+}
+
+/* ==========================================================================
    DETAIL PAGES (GUIDES, PACKAGES, DESTINATIONS, VENDORS, ARTICLES)
    ========================================================================== */
 .turget-detail-layout {

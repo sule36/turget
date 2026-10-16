@@ -90,7 +90,7 @@ function submitSearch() {
                             v-model="searchQuery"
                             @input="onSearchInput"
                             @keydown.enter="submitSearch"
-                            :placeholder="t('nav.search_placeholder', 'Cari destinasi, kota, provinsi, atau aktivitas...')"
+                            :placeholder="t('nav.search_placeholder', 'Cari destinasi, tour guide, paket wisata, atau vendor...')"
                             class="turget-search-input"
                             autocomplete="off"
                         />
@@ -117,8 +117,8 @@ function submitSearch() {
                                     :alt="item.title"
                                     class="turget-search-item-thumb"
                                 />
-                                <div v-else class="turget-search-item-thumb" style="background: var(--color-blue-50); display:flex; align-items:center; justify-content:center; color: var(--color-blue-600); font-weight:700;">
-                                    📍
+                                <div v-else class="turget-search-item-thumb" style="background: var(--color-blue-50); display:flex; align-items:center; justify-content:center; color: var(--color-blue-600); font-weight:700; font-size: 1.1rem;">
+                                    {{ item.type === 'guide' ? '🧭' : (item.type === 'package' ? '🎒' : (item.type === 'vendor' ? '🏨' : (item.type === 'category' ? '🏷️' : '📍'))) }}
                                 </div>
                                 <div class="turget-search-item-info">
                                     <div class="turget-search-item-title">{{ item.title }}</div>
