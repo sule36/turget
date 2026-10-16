@@ -89,9 +89,9 @@ class BookingCheckoutController extends Controller
     }
 
     /**
-     * Payment Simulator Page (PRD §15.1).
+     * Payment Page (PRD §15.1).
      */
-    public function paymentPage(Request $request, Booking $booking): Response|RedirectResponse
+    public function paymentPage(Request $request, Booking $booking, \App\Services\MidtransService $midtransService): Response|RedirectResponse
     {
         $user = $request->user();
         if ($booking->traveler_id !== $user->id) {
@@ -104,8 +104,17 @@ class BookingCheckoutController extends Controller
 
         $booking->load(['tourPackage', 'vendorProduct', 'tripProposal', 'guide', 'vendor', 'addons.vendorProduct']);
 
+        $snapData = $midtransService->createSnapToken($booking);
+
         return Inertia::render('Bookings/Payment', [
             'booking' => $booking,
+            'midtrans' => [
+                'client_key' => $midtransService->getClientKey(),
+                'snap_js_url' => $midtransService->getSnapJsUrl(),
+                'token' => $snapData['token'] ?? null,
+                'redirect_url' => $snapData['redirect_url'] ?? null,
+                'enabled' => ! empty($midtransService->getServerKey()),
+            ],
         ]);
     }
 

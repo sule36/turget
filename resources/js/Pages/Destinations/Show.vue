@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
+import { useFavorites } from '@/composables/useFavorites';
 
 const props = defineProps({
     destination: Object,
@@ -11,6 +12,7 @@ const props = defineProps({
 });
 
 const { t, tr, locale } = useI18n();
+const { isFavorited, toggleFavorite } = useFavorites();
 
 const activeTab = ref('overview');
 const activeVendorCategory = ref('accommodation');
@@ -93,9 +95,22 @@ function formatPrice(amount) {
                         <div style="font-size: 1.5rem; font-weight: 800; color: var(--color-navy-950); margin-bottom: 0.75rem;">
                             ★ 4.9 <span style="font-size: 0.82rem; font-weight: 500; color: var(--color-text-muted);">(128 Ulasan)</span>
                         </div>
-                        <a href="#booking-cta" class="turget-btn turget-btn-primary" style="width: 100%;">
+                        <a href="#booking-cta" class="turget-btn turget-btn-primary" style="width: 100%; margin-bottom: 0.5rem; justify-content: center;">
                             Pesan Tour Guide →
                         </a>
+                        <button
+                            type="button"
+                            @click="toggleFavorite('destination', destination.id)"
+                            class="turget-btn turget-btn-secondary"
+                            :style="{
+                                width: '100%',
+                                justifyContent: 'center',
+                                borderColor: isFavorited('destination', destination.id) ? '#e11d48' : '',
+                                color: isFavorited('destination', destination.id) ? '#e11d48' : ''
+                            }"
+                        >
+                            {{ isFavorited('destination', destination.id) ? '❤️ ' + (locale === 'id' ? 'Tersimpan di Favorit' : 'Saved to Wishlist') : '🤍 ' + (locale === 'id' ? 'Simpan ke Favorit' : 'Add to Wishlist') }}
+                        </button>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingCheckoutController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Guide\DashboardController as GuideDashboardController;
 use App\Http\Controllers\Guide\OnboardingController as GuideOnboardingController;
 use App\Http\Controllers\Guide\PackageController as GuidePackageController;
@@ -24,6 +25,8 @@ use App\Http\Controllers\Guide\TripInquiryBoardController as GuideTripInquiryBoa
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\MidtransWebhookController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
@@ -48,6 +51,9 @@ Route::post('/locale/{locale}', [LocaleController::class, 'switch'])->name('loca
 
 // Search Autocomplete
 Route::get('/api/search/autocomplete', [SearchController::class, 'autocomplete'])->name('search.autocomplete');
+
+// Midtrans Payment Gateway Webhook
+Route::post('/api/midtrans/webhook', [MidtransWebhookController::class, 'handle'])->name('midtrans.webhook');
 
 // Public Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -119,6 +125,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::match(['put', 'patch'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::match(['put', 'patch'], '/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Wishlist / Favorit Saya
+    Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+    // In-App Notifications
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read_all');
 
     // Payout Wallet & Balance Withdrawal (PRD §16.2)
     Route::get('/payouts', [PayoutController::class, 'index'])->name('payouts.index');

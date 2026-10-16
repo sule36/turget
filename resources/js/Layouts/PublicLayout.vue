@@ -8,13 +8,36 @@ const { locale, t } = useI18n();
 
 const authUser = computed(() => page.props.auth?.user);
 const flash = computed(() => page.props.flash || {});
+const notifications = computed(() => page.props.notifications || { unread_count: 0, recent: [] });
 
 const showMobileNav = ref(false);
+const showNotifications = ref(false);
 
 // Auto-close mobile drawer when route changes
 watch(() => page.url, () => {
     showMobileNav.value = false;
+    showNotifications.value = false;
 });
+
+function markNotificationAsRead(notif) {
+    if (!notif.is_read) {
+        router.post(`/notifications/${notif.id}/read`, {}, {
+            preserveScroll: true,
+            preserveState: true,
+        });
+    }
+    showNotifications.value = false;
+    if (notif.action_url) {
+        router.visit(notif.action_url);
+    }
+}
+
+function markAllNotificationsRead() {
+    router.post('/notifications/read-all', {}, {
+        preserveScroll: true,
+        preserveState: true,
+    });
+}
 
 function switchLang(lang) {
     if (lang === locale.value) return;
@@ -118,6 +141,14 @@ function switchLang(lang) {
                                         {{ authUser.name.split(' ')[0] }}
                                     </Link>
                                     <Link
+                                        href="/my-favorites"
+                                        class="turget-btn turget-btn-secondary turget-btn-sm"
+                                        style="padding: 0.25rem 0.5rem; font-size: 0.75rem; color: #e11d48;"
+                                        :title="locale === 'id' ? 'Wishlist & Favorit Saya' : 'My Saved Wishlist'"
+                                    >
+                                        ❤️
+                                    </Link>
+                                    <Link
                                         href="/profile"
                                         class="turget-btn turget-btn-secondary turget-btn-sm"
                                         style="padding: 0.25rem 0.5rem; font-size: 0.72rem;"
@@ -151,6 +182,78 @@ function switchLang(lang) {
                                     {{ t('nav.register', 'Daftar') }}
                                 </Link>
                             </template>
+                        </div>
+
+                        <!-- Notification Bell Dropdown (Both Desktop & Mobile) -->
+                        <div v-if="authUser" style="position: relative;">
+                            <button
+                                type="button"
+                                @click="showNotifications = !showNotifications"
+                                class="turget-btn turget-btn-secondary turget-btn-sm"
+                                style="padding: 0.35rem 0.55rem; font-size: 0.95rem; position: relative; border-radius: var(--radius-full);"
+                                :title="locale === 'id' ? 'Notifikasi' : 'Notifications'"
+                                aria-label="Notifications"
+                            >
+                                🔔
+                                <span
+                                    v-if="notifications.unread_count > 0"
+                                    style="position: absolute; top: -4px; right: -4px; background: #e11d48; color: white; font-size: 0.65rem; font-weight: 800; border-radius: 9999px; min-width: 17px; height: 17px; display: flex; align-items: center; justify-content: center; padding: 0 3px; border: 2px solid white; line-height: 1;"
+                                >
+                                    {{ notifications.unread_count > 9 ? '9+' : notifications.unread_count }}
+                                </span>
+                            </button>
+
+                            <!-- Notification Dropdown Modal -->
+                            <div
+                                v-if="showNotifications"
+                                style="position: absolute; top: calc(100% + 8px); right: 0; width: min(340px, calc(100vw - 2rem)); background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); border: 1px solid var(--color-border-subtle); z-index: 1000; overflow: hidden;"
+                            >
+                                <div style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--color-border-subtle); display: flex; justify-content: space-between; align-items: center; background: var(--color-surface-subtle);">
+                                    <div style="font-weight: 800; font-size: 0.88rem; color: var(--color-navy-950);">
+                                        🔔 {{ locale === 'id' ? 'Notifikasi Akun' : 'Notifications' }}
+                                    </div>
+                                    <button
+                                        v-if="notifications.unread_count > 0"
+                                        type="button"
+                                        @click="markAllNotificationsRead"
+                                        style="background: none; border: none; font-size: 0.72rem; color: var(--color-blue-600); cursor: pointer; font-weight: 600; padding: 0;"
+                                    >
+                                        {{ locale === 'id' ? 'Tandai Dibaca' : 'Mark all read' }}
+                                    </button>
+                                </div>
+
+                                <div style="max-height: 320px; overflow-y: auto;">
+                                    <div
+                                        v-if="notifications.recent && notifications.recent.length > 0"
+                                        style="display: flex; flex-direction: column;"
+                                    >
+                                        <div
+                                            v-for="notif in notifications.recent"
+                                            :key="notif.id"
+                                            @click="markNotificationAsRead(notif)"
+                                            style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border-subtle); cursor: pointer; transition: background 0.15s ease;"
+                                            :style="{ background: notif.is_read ? 'white' : 'var(--color-blue-50)' }"
+                                        >
+                                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.2rem;">
+                                                <div style="font-weight: 700; font-size: 0.82rem; color: var(--color-navy-950); line-height: 1.25;">
+                                                    {{ notif.title }}
+                                                </div>
+                                                <span v-if="!notif.is_read" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-blue-600); flex-shrink: 0; margin-top: 4px;"></span>
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.35; margin-bottom: 0.25rem;">
+                                                {{ notif.message }}
+                                            </div>
+                                            <div style="font-size: 0.68rem; color: var(--color-text-subtle);">
+                                                {{ new Date(notif.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div v-else style="padding: 2rem 1rem; text-align: center; color: var(--color-text-muted); font-size: 0.82rem;">
+                                        {{ locale === 'id' ? 'Tidak ada pemberitahuan baru.' : 'No new notifications.' }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Mobile Hamburger Button -->
@@ -220,6 +323,9 @@ function switchLang(lang) {
                         </Link>
                         <Link href="/my-bookings" class="turget-mobile-sublink" @click="showMobileNav = false">
                             🛡️ {{ locale === 'id' ? 'Pesanan & Booking' : 'My Bookings' }}
+                        </Link>
+                        <Link href="/my-favorites" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            ❤️ {{ locale === 'id' ? 'Favorit Saya' : 'My Saved Wishlist' }}
                         </Link>
                         <Link href="/chat" class="turget-mobile-sublink" @click="showMobileNav = false">
                             💬 {{ locale === 'id' ? 'Pesan & Diskusi' : 'Messages' }}

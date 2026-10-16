@@ -1,17 +1,62 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
 
 const props = defineProps({
     booking: Object,
+    midtrans: {
+        type: Object,
+        default: () => ({ enabled: false }),
+    },
 });
 
 const { t, locale } = useI18n();
 
 const selectedChannel = ref('qris');
 const isSimulating = ref(false);
+const isMidtransLoading = ref(false);
+
+onMounted(() => {
+    if (props.midtrans?.snap_js_url && props.midtrans?.client_key) {
+        if (!document.getElementById('midtrans-snap-script')) {
+            const script = document.createElement('script');
+            script.id = 'midtrans-snap-script';
+            script.src = props.midtrans.snap_js_url;
+            script.setAttribute('data-client-key', props.midtrans.client_key);
+            document.head.appendChild(script);
+        }
+    }
+});
+
+function payWithMidtrans() {
+    if (!props.midtrans?.token) {
+        alert(locale.value === 'id' 
+            ? 'Kunci API Midtrans belum dikonfigurasi di file .env server. Silakan gunakan tombol simulasi sandbox di bawah.' 
+            : 'Midtrans API keys are not configured yet. Please use the sandbox simulator below.');
+        return;
+    }
+
+    if (window.snap) {
+        window.snap.pay(props.midtrans.token, {
+            onSuccess: function (result) {
+                router.visit(`/bookings/${props.booking.id}`);
+            },
+            onPending: function (result) {
+                router.visit(`/bookings/${props.booking.id}`);
+            },
+            onError: function (result) {
+                alert(locale.value === 'id' ? 'Pembayaran gagal diproses.' : 'Payment failed.');
+            },
+            onClose: function () {
+                // Closed without payment
+            },
+        });
+    } else {
+        alert(locale.value === 'id' ? 'Memuat modul Midtrans... Coba sesaat lagi.' : 'Loading payment gateway... Please try again.');
+    }
+}
 
 function simulatePayment() {
     isSimulating.value = true;
@@ -172,23 +217,45 @@ function simulatePayment() {
                         </div>
                     </div>
 
-                    <!-- Sandbox Instant Payment Action -->
-                    <div style="background: #ECFDF5; border: 1px solid var(--color-emerald-500); border-radius: var(--radius-lg); padding: 1.75rem; text-align: center;">
-                        <h4 style="font-weight: 700; color: var(--color-emerald-600); font-size: 1.1rem; margin-bottom: 0.35rem;">
-                            ⚡ Simulasi Pembayaran Sukses (Sandbox Testing)
+                    <!-- Midtrans Snap Real Payment Action -->
+                    <div v-if="midtrans?.enabled" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border: 2px solid var(--color-blue-600); border-radius: var(--radius-lg); padding: 1.75rem; text-align: center; margin-bottom: 1.5rem;">
+                        <span class="turget-badge" style="background: var(--color-blue-600); color: white; margin-bottom: 0.5rem;">
+                            🔒 Midtrans Official Payment Gateway
+                        </span>
+                        <h4 style="font-weight: 800; color: var(--color-navy-950); font-size: 1.25rem; margin-bottom: 0.35rem;">
+                            Bayar Otomatis via Midtrans Snap
                         </h4>
-                        <p style="font-size: 0.88rem; color: var(--color-navy-950); max-width: 540px; margin: 0 auto 1.25rem;">
-                            Klik tombol di bawah ini untuk mensimulasikan notifikasi sukses dari payment gateway. Sistem akan mengunci dana di rekening Escrow Turget.id dan menerbitkan e-voucher resmi Anda.
+                        <p style="font-size: 0.88rem; color: var(--color-text-body); max-width: 520px; margin: 0 auto 1.25rem; line-height: 1.5;">
+                            Gunakan QRIS dinamis (GoPay, OVO, ShopeePay, BCA QR) atau Virtual Account resmi bank Anda. Notifikasi lunas diverifikasi otomatis tanpa konfirmasi manual.
                         </p>
 
                         <button
                             type="button"
                             class="turget-btn turget-btn-primary"
-                            style="background: var(--color-emerald-600); font-size: 1.05rem; padding: 0.85rem 2.5rem; justify-content: center;"
+                            style="font-size: 1.05rem; padding: 0.9rem 2.75rem; justify-content: center; box-shadow: var(--shadow-md); margin: 0 auto;"
+                            @click="payWithMidtrans"
+                        >
+                            💳 Buka Pembayaran Midtrans Snap →
+                        </button>
+                    </div>
+
+                    <!-- Sandbox Instant Payment Action (Simulator) -->
+                    <div style="background: #F8FAFC; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;">
+                        <h4 style="font-weight: 700; color: var(--color-text-subtle); font-size: 0.95rem; margin-bottom: 0.25rem;">
+                            ⚡ Mode Pengujian / Simulasi Cepat (Sandbox)
+                        </h4>
+                        <p style="font-size: 0.82rem; color: var(--color-text-muted); max-width: 500px; margin: 0 auto 1rem;">
+                            Simulasi instan untuk developer / testing. Memverifikasi pembayaran dan mengunci dana di rekening Escrow tanpa memotong saldo asli.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="turget-btn turget-btn-secondary"
+                            style="font-size: 0.9rem; padding: 0.65rem 1.75rem; justify-content: center; margin: 0 auto;"
                             :disabled="isSimulating"
                             @click="simulatePayment"
                         >
-                            {{ isSimulating ? 'Memverifikasi Pembayaran Sandbox...' : '✓ Bayar Sekarang (Simulasi Midtrans Sukses)' }}
+                            {{ isSimulating ? 'Memverifikasi Pembayaran...' : '🧪 Simulasi Bayar Lunas (Testing)' }}
                         </button>
                     </div>
 

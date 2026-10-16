@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
+import { useFavorites } from '@/composables/useFavorites';
 
 const props = defineProps({
     guide: Object,
@@ -15,6 +16,7 @@ const props = defineProps({
 });
 
 const { t, tr, locale } = useI18n();
+const { isFavorited, toggleFavorite } = useFavorites();
 
 const activeTab = ref('overview'); // 'overview' | 'packages' | 'destinations' | 'policy'
 
@@ -126,6 +128,21 @@ function startChatWithGuide() {
                             >
                                 ✨ {{ locale === 'id' ? 'Rencanakan Trip Kustom' : 'Plan Custom Trip' }}
                             </Link>
+                            <button
+                                type="button"
+                                @click="toggleFavorite('guide', guide.id)"
+                                class="turget-btn"
+                                :style="{
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                    background: isFavorited('guide', guide.id) ? '#e11d48' : 'rgba(255,255,255,0.12)',
+                                    color: 'white',
+                                    border: '1px solid ' + (isFavorited('guide', guide.id) ? '#e11d48' : 'rgba(255,255,255,0.25)'),
+                                    fontWeight: '600'
+                                }"
+                            >
+                                {{ isFavorited('guide', guide.id) ? '❤️ ' + (locale === 'id' ? 'Tersimpan di Favorit' : 'Saved to Wishlist') : '🤍 ' + (locale === 'id' ? 'Simpan ke Favorit' : 'Add to Wishlist') }}
+                            </button>
                             <a
                                 href="#packages-section"
                                 class="turget-btn"

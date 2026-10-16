@@ -42,6 +42,45 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn () => $request->session()->get('error'),
                 'warning' => fn () => $request->session()->get('warning'),
             ],
+            'notifications' => function () use ($user) {
+                if (! $user || ! \Illuminate\Support\Facades\Schema::hasTable('in_app_notifications')) {
+                    return ['unread_count' => 0, 'recent' => []];
+                }
+
+                try {
+                    $unread = \App\Models\InAppNotification::where('user_id', $user->id)
+                        ->where('is_read', false)
+                        ->count();
+
+                    $recent = \App\Models\InAppNotification::where('user_id', $user->id)
+                        ->latest('id')
+                        ->take(5)
+                        ->get(['id', 'title', 'message', 'type', 'action_url', 'is_read', 'created_at']);
+
+                    return [
+                        'unread_count' => $unread,
+                        'recent' => $recent,
+                    ];
+                } catch (\Throwable $e) {
+                    return ['unread_count' => 0, 'recent' => []];
+                }
+            },
+            'favoriteIds' => function () use ($user) {
+                if (! $user || ! \Illuminate\Support\Facades\Schema::hasTable('favorites')) {
+                    return ['guide' => [], 'package' => [], 'destination' => []];
+                }
+
+                try {
+                    $favs = \App\Models\Favorite::where('user_id', $user->id)->get(['favoritable_type', 'favoritable_id']);
+                    return [
+                        'guide' => $favs->where('favoritable_type', 'guide')->pluck('favoritable_id')->values()->all(),
+                        'package' => $favs->where('favoritable_type', 'package')->pluck('favoritable_id')->values()->all(),
+                        'destination' => $favs->where('favoritable_type', 'destination')->pluck('favoritable_id')->values()->all(),
+                    ];
+                } catch (\Throwable $e) {
+                    return ['guide' => [], 'package' => [], 'destination' => []];
+                }
+            },
         ];
     }
 }

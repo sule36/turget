@@ -11,6 +11,7 @@ use App\Models\AuditLog;
 use App\Models\Booking;
 use App\Models\BookingAddon;
 use App\Models\EscrowLedger;
+use App\Models\InAppNotification;
 use App\Models\RefundRequest;
 use App\Models\TourPackage;
 use App\Models\Transaction;
@@ -288,6 +289,39 @@ class PaymentAndEscrowService
 
         AuditLog::record('transaction.paid_escrow', $transaction);
 
+        // Notify Traveler
+        try {
+            InAppNotification::notify(
+                $booking->traveler_id,
+                'Pembayaran Dikonfirmasi!',
+                "Pembayaran untuk pesanan {$booking->booking_code} telah diterima dan diamankan oleh Escrow Turget.id. E-Voucher resmi telah diterbitkan.",
+                "/bookings/{$booking->id}/voucher",
+                'booking'
+            );
+
+            // Notify Guide
+            if ($booking->guide?->user_id) {
+                InAppNotification::notify(
+                    $booking->guide->user_id,
+                    'Pesanan Baru Diterima!',
+                    "Wisatawan telah melunasi pesanan {$booking->booking_code}. Dana honor Anda telah dialokasikan di Escrow dan siap dipandu.",
+                    "/guide/dashboard",
+                    'booking'
+                );
+            }
+
+            // Notify Vendor
+            if ($booking->vendor?->user_id) {
+                InAppNotification::notify(
+                    $booking->vendor->user_id,
+                    'Pesanan Produk Masuk!',
+                    "Layanan vendor Anda telah dipesan dan dilunasi untuk kode {$booking->booking_code}.",
+                    "/vendor/dashboard",
+                    'booking'
+                );
+            }
+        } catch (\Throwable $e) {}
+
         return $transaction;
     }
 
@@ -322,6 +356,19 @@ class PaymentAndEscrowService
         if ($booking->vendor) {
             $booking->vendor->increment('bookings_completed_count');
         }
+
+        // Notify Guide on payout release
+        try {
+            if ($booking->guide?->user_id) {
+                InAppNotification::notify(
+                    $booking->guide->user_id,
+                    'Dana Honor Dilepaskan!',
+                    "Wisatawan telah mengonfirmasi trip {$booking->booking_code} selesai. Dana honor telah dilepas dan siap dicairkan ke rekening bank Anda.",
+                    "/payouts",
+                    'escrow'
+                );
+            }
+        } catch (\Throwable $e) {}
 
         AuditLog::record('booking.completed_released', $booking, ['released_by' => $actor->id]);
     }
