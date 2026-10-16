@@ -77,7 +77,7 @@ function startChatWithGuide(guideUserId) {
                             </div>
                         </div>
 
-                        <div style="background: var(--color-surface-subtle); border-radius: var(--radius-md); padding: 1rem 1.25rem; min-width: 230px; text-align: right; border: 1px solid var(--color-border-subtle);">
+                        <div class="turget-cta-card-mobile-full" style="background: var(--color-surface-subtle); border-radius: var(--radius-md); padding: 1rem 1.25rem; min-width: 230px; text-align: right; border: 1px solid var(--color-border-subtle);">
                             <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-text-subtle); font-weight: 700;">
                                 {{ locale === 'id' ? 'Target Anggaran' : 'Target Budget' }}
                             </div>

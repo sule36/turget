@@ -59,7 +59,7 @@ function getUnitLabel(unit) {
                                 🛡️ {{ locale === 'en' ? 'Verified Vendor' : 'Mitra Terverifikasi' }}
                             </span>
                         </div>
-                        <h1 style="font-family: var(--font-serif); font-size: 2.35rem; font-weight: 700; color: white; margin: 0 0 0.4rem; line-height: 1.2;">
+                        <h1 class="turget-detail-title" style="color: white;">
                             {{ vendor.business_name }}
                         </h1>
                         <div style="color: var(--color-sand-200); font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
@@ -75,8 +75,8 @@ function getUnitLabel(unit) {
         </section>
 
         <!-- Main Body -->
-        <main class="turget-container" style="padding: 3.5rem 0 5rem;">
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+        <main class="turget-container" style="padding: 2.25rem 0 5rem;">
+            <div class="turget-detail-layout">
                 <!-- Left Column: Story, Offerings & Details -->
                 <div>
                     <!-- About Section -->
@@ -172,9 +172,9 @@ function getUnitLabel(unit) {
                 </div>
 
                 <!-- Right Column: Sidebar Contacts & Location Map -->
-                <div>
+                <div class="turget-sticky-booking-sidebar">
                     <!-- Verification & Contact Card -->
-                    <div class="turget-card" style="padding: 1.75rem; margin-bottom: 2rem; position: sticky; top: 5.5rem;">
+                    <div class="turget-card" style="padding: 1.75rem; margin-bottom: 2rem;">
                         <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1.25rem;">
                             📞 {{ locale === 'en' ? 'Contact & Booking Info' : 'Informasi Pemesanan' }}
                         </h3>

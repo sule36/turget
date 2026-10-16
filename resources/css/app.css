@@ -1472,6 +1472,179 @@ button, input, select, textarea {
 }
 
 
+/* ==========================================================================
+   DETAIL PAGES (GUIDES, PACKAGES, DESTINATIONS, VENDORS, ARTICLES)
+   ========================================================================== */
+.turget-detail-layout {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.turget-detail-hero-cover {
+    height: 320px;
+    position: relative;
+    overflow: hidden;
+}
+
+.turget-detail-hero-info {
+    position: relative;
+    margin-top: -5rem;
+    padding-bottom: 2rem;
+}
+
+.turget-detail-hero-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.turget-detail-avatar-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: flex-end;
+}
+
+.turget-detail-avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: var(--shadow-lg);
+}
+
+.turget-detail-title {
+    font-family: var(--font-heading);
+    font-size: 2.15rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.35rem;
+}
+
+.turget-detail-pricing-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem 1.5rem;
+    min-width: 260px;
+}
+
+.turget-tabs-strip {
+    background: white;
+    border-bottom: 1px solid var(--color-border-subtle);
+    position: sticky;
+    top: 3.75rem;
+    z-index: 20;
+    box-shadow: var(--shadow-xs);
+}
+
+.turget-tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 0;
+}
+.turget-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.turget-tab-btn {
+    padding: 0.75rem 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-navy-700);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-base);
+    flex-shrink: 0;
+}
+
+.turget-tab-btn:hover,
+.turget-tab-btn.is-active {
+    color: var(--color-blue-600);
+}
+
+.turget-tab-btn.is-active {
+    border-bottom-color: var(--color-blue-600);
+    font-weight: 700;
+}
+
+.turget-package-card-row {
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: white;
+    transition: var(--transition-base);
+}
+
+.turget-package-card-row:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-hover);
+}
+
+.turget-package-card-thumb {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    object-fit: cover;
+}
+
+.turget-package-card-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.turget-two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.turget-sticky-booking-sidebar {
+    position: sticky;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.turget-cta-card-mobile-full {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-subtle);
+    min-width: 260px;
+    text-align: center;
+}
+
+.turget-article-title {
+    font-family: var(--font-heading);
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: var(--color-navy-950);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.035em;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
     .turget-hero-title {
@@ -1488,6 +1661,18 @@ button, input, select, textarea {
     }
     .turget-footer-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .turget-detail-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+    }
+    .turget-sticky-booking-sidebar {
+        position: static !important;
+        width: 100% !important;
     }
 }
 
@@ -1635,5 +1820,57 @@ button, input, select, textarea {
     }
     .turget-btn {
         padding: 0.45rem 0.85rem;
+    }
+
+    /* Detail Pages Mobile Adaptations */
+    .turget-detail-hero-cover {
+        height: 190px !important;
+    }
+    .turget-detail-hero-info {
+        margin-top: -3.25rem !important;
+        padding-bottom: 1.25rem !important;
+    }
+    .turget-detail-hero-flex {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1rem !important;
+    }
+    .turget-detail-avatar-wrap {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    .turget-detail-avatar-img {
+        width: 82px !important;
+        height: 82px !important;
+        border-width: 3px !important;
+    }
+    .turget-detail-title {
+        font-size: 1.55rem !important;
+        line-height: 1.22 !important;
+    }
+    .turget-detail-pricing-box {
+        width: 100% !important;
+        min-width: 100% !important;
+        padding: 1rem !important;
+    }
+    .turget-package-card-row {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .turget-package-card-thumb {
+        height: 170px !important;
+        width: 100% !important;
+    }
+    .turget-two-col-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    .turget-cta-card-mobile-full {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+    .turget-article-title {
+        font-size: 1.65rem !important;
     }
 }

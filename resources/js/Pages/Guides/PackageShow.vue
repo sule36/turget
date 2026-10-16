@@ -49,7 +49,7 @@ function formatPrice(amount) {
                     </span>
                 </div>
 
-                <h1 style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.5rem;">
+                <h1 class="turget-detail-title">
                     {{ tr(package.title) }}
                 </h1>
                 <p v-if="package.tagline" style="font-size: 1.05rem; color: var(--color-text-muted); max-width: 800px;">
@@ -59,13 +59,13 @@ function formatPrice(amount) {
         </section>
 
         <!-- Main Content -->
-        <section class="turget-section" style="background: white; padding: 3rem 0 6rem;">
+        <section class="turget-section" style="background: white; padding: 2.25rem 0 5rem;">
             <div class="turget-container">
-                <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 3rem; align-items: start;">
+                <div class="turget-detail-layout">
                     <!-- Left: Itinerary & Inclusions -->
-                    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
                         <!-- Cover Image -->
-                        <div style="height: 380px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--color-border-subtle); box-shadow: var(--shadow-sm);">
+                        <div style="max-height: 380px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--color-border-subtle); box-shadow: var(--shadow-sm);">
                             <img
                                 :src="package.cover_image || '/images/destinations/bali_hero.jpg'"
                                 :alt="tr(package.title)"
@@ -116,7 +116,7 @@ function formatPrice(amount) {
                         </div>
 
                         <!-- Inclusions & Exclusions -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="turget-two-col-grid">
                             <!-- Inclusions -->
                             <div style="background: #F0FDF4; border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius-lg); padding: 1.5rem;">
                                 <h3 style="font-size: 1rem; font-weight: 700; color: var(--color-emerald-700); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
@@ -160,7 +160,7 @@ function formatPrice(amount) {
                     </div>
 
                     <!-- Right Sticky Booking Card -->
-                    <div style="position: sticky; top: 5.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="turget-sticky-booking-sidebar">
                         <!-- Pricing Box -->
                         <div class="turget-admin-card" style="box-shadow: var(--shadow-md); border-color: rgba(37,99,235,0.2);">
                             <div style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-subtle); text-transform: uppercase;">

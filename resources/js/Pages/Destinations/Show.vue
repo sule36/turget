@@ -74,7 +74,7 @@ function formatPrice(amount) {
                             </span>
                         </div>
 
-                        <h1 style="font-family: var(--font-heading); font-size: 2.15rem; font-weight: 800; color: var(--color-navy-950); line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 0.4rem;">
+                        <h1 class="turget-detail-title">
                             {{ tr(destination.name) }}
                         </h1>
 
@@ -88,7 +88,7 @@ function formatPrice(amount) {
                     </div>
 
                     <!-- CTA Box -->
-                    <div style="background: white; border-radius: var(--radius-lg); padding: 1.15rem 1.25rem; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-subtle); min-width: 260px; text-align: center;">
+                    <div class="turget-cta-card-mobile-full">
                         <div style="font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Rating Pengunjung</div>
                         <div style="font-size: 1.5rem; font-weight: 800; color: var(--color-navy-950); margin-bottom: 0.75rem;">
                             ★ 4.9 <span style="font-size: 0.82rem; font-weight: 500; color: var(--color-text-muted);">(128 Ulasan)</span>
@@ -161,13 +161,13 @@ function formatPrice(amount) {
         </section>
 
         <!-- Content Body & Tabs -->
-        <section class="turget-section">
+        <section class="turget-section" style="padding: 2.25rem 0 5rem;">
             <div class="turget-container">
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3.5rem;">
+                <div class="turget-detail-layout" style="gap: 2.5rem;">
                     <!-- Left: In-Depth Content -->
                     <div>
                         <!-- Tabs Header -->
-                        <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--color-border-subtle); margin-bottom: 2rem;">
+                        <div class="turget-tabs-nav" style="border-bottom: 2px solid var(--color-border-subtle); margin-bottom: 2rem;">
                             <button
                                 v-for="tab in tabs"
                                 :key="tab.id"
@@ -258,7 +258,7 @@ function formatPrice(amount) {
                     </div>
 
                     <!-- Right Sidebar -->
-                    <div>
+                    <div class="turget-sticky-booking-sidebar">
                         <!-- Location & Verified Coordinates Card -->
                         <div style="background: white; border-radius: var(--radius-xl); padding: 1.75rem; border: 1px solid var(--color-border-subtle); box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.75rem;">

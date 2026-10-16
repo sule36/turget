@@ -53,11 +53,11 @@ function formatBody(text) {
                     </span>
                 </div>
 
-                <h1 style="font-family: var(--font-serif); font-size: 3rem; font-weight: 700; color: var(--color-navy-950); line-height: 1.2; margin-bottom: 1.25rem;">
+                <h1 class="turget-article-title">
                     {{ tr(article.title) }}
                 </h1>
 
-                <p style="font-size: 1.25rem; line-height: 1.65; color: var(--color-text-muted); margin-bottom: 2rem;">
+                <p style="font-size: 1.1rem; line-height: 1.6; color: var(--color-text-muted); margin-bottom: 2rem;">
                     {{ tr(article.excerpt) }}
                 </p>
 

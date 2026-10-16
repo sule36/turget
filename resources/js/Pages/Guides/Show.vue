@@ -30,7 +30,7 @@ function formatPrice(amount) {
         <!-- Creator Profile Hero Banner -->
         <section style="position: relative; background: var(--color-navy-950); color: white;">
             <!-- Cover Photo with Dark Overlay -->
-            <div style="height: 320px; position: relative; overflow: hidden;">
+            <div class="turget-detail-hero-cover">
                 <img
                     :src="guide.cover_image_url || '/images/destinations/bali_hero.jpg'"
                     :alt="guide.display_name"
@@ -40,15 +40,15 @@ function formatPrice(amount) {
             </div>
 
             <!-- Profile Info Container -->
-            <div class="turget-container" style="position: relative; margin-top: -6rem; padding-bottom: 2.5rem;">
-                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-end; justify-content: space-between;">
-                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end;">
+            <div class="turget-container turget-detail-hero-info">
+                <div class="turget-detail-hero-flex">
+                    <div class="turget-detail-avatar-wrap">
                         <!-- Avatar with Verified Ring -->
                         <div style="position: relative;">
                             <img
                                 :src="guide.avatar_url || '/images/destinations/bali_hero.jpg'"
                                 :alt="guide.display_name"
-                                style="width: 128px; height: 128px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: var(--shadow-lg);"
+                                class="turget-detail-avatar-img"
                             />
                             <span
                                 v-if="guide.badge_verified"
@@ -61,8 +61,8 @@ function formatPrice(amount) {
 
                         <!-- Name & Key Bio -->
                         <div>
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem;">
-                                <h1 style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: white;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                                <h1 class="turget-detail-title" style="color: white;">
                                     {{ guide.display_name }}
                                 </h1>
                                 <span
@@ -78,7 +78,7 @@ function formatPrice(amount) {
                                 {{ tr(guide.tagline) || 'Pemandu wisata profesional berbasis di ' + tr(guide.region?.name) }}
                             </p>
 
-                            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; font-size: 0.88rem; color: var(--color-text-subtle);">
+                            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; font-size: 0.88rem; color: var(--color-text-subtle);">
                                 <span>📍 {{ tr(guide.region?.name) }}, {{ tr(guide.country?.name) }}</span>
                                 <span>•</span>
                                 <span>⭐ {{ guide.rating_avg || '5.0' }} ({{ guide.reviews_count }} ulasan)</span>
@@ -91,7 +91,7 @@ function formatPrice(amount) {
                     </div>
 
                     <!-- Right Pricing & Direct Booking Card -->
-                    <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-xl); padding: 1.5rem; min-width: 260px;">
+                    <div class="turget-detail-pricing-box">
                         <div style="font-size: 0.82rem; color: var(--color-sand-200); text-transform: uppercase; letter-spacing: 0.05em;">
                             Tarif Jasa Pribadi
                         </div>
@@ -101,7 +101,7 @@ function formatPrice(amount) {
                         </div>
 
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <a href="#packages-section" class="turget-btn turget-btn-primary" style="justify-content: center;">
+                            <a href="#packages-section" class="turget-btn turget-btn-primary" style="justify-content: center; width: 100%;">
                                 Lihat Paket Wisata ↓
                             </a>
                         </div>
@@ -111,7 +111,7 @@ function formatPrice(amount) {
         </section>
 
         <!-- Navigation Tabs -->
-        <section style="background: white; border-bottom: 1px solid var(--color-border-subtle); position: sticky; top: 4.5rem; z-index: 10;">
+        <section class="turget-tabs-strip">
             <div class="turget-container">
                 <div class="turget-tabs-nav" style="margin-bottom: 0;">
                     <button
@@ -143,22 +143,22 @@ function formatPrice(amount) {
         </section>
 
         <!-- Main Content Area -->
-        <section class="turget-section" style="background: var(--color-surface-subtle); padding: 3rem 0 5rem;">
+        <section class="turget-section" style="background: var(--color-surface-subtle); padding: 2.5rem 0 5rem;">
             <div class="turget-container">
-                <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 2.5rem; align-items: start;">
+                <div class="turget-detail-layout">
                     <!-- Left Column -->
                     <div style="display: flex; flex-direction: column; gap: 2rem;">
                         <!-- About & Narrative -->
                         <div class="turget-admin-card" style="box-shadow: var(--shadow-sm);">
-                            <h2 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
+                            <h2 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
                                 Tentang Saya & Gaya Perjalanan
                             </h2>
-                            <div style="font-size: 1rem; color: var(--color-navy-950); line-height: 1.7; white-space: pre-line;">
+                            <div style="font-size: 0.95rem; color: var(--color-navy-950); line-height: 1.7; white-space: pre-line;">
                                 {{ tr(guide.bio) || 'Selamat datang di halaman resmi saya di Turget.id. Saya adalah tour guide berlisensi yang berdedikasi memperkenalkan pesona autentik dan kearifan lokal.' }}
                             </div>
 
                             <!-- Highlights & Stats Badges -->
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-subtle);">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border-subtle);">
                                 <div>
                                     <div style="font-size: 0.78rem; color: var(--color-text-muted); text-transform: uppercase;">Pengalaman Kerja</div>
                                     <div style="font-size: 1.15rem; font-weight: 700; color: var(--color-navy-950);">{{ guide.experience_years }} Tahun</div>
@@ -178,8 +178,8 @@ function formatPrice(amount) {
 
                         <!-- Featured Packages Section -->
                         <div id="packages-section" class="turget-admin-card" style="box-shadow: var(--shadow-sm);">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                                <h2 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--color-navy-950);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <h2 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--color-navy-950);">
                                     Paket Wisata Pilihan
                                 </h2>
                                 <span class="turget-badge" style="margin: 0; background: var(--color-blue-50); color: var(--color-blue-600);">
@@ -191,17 +191,17 @@ function formatPrice(amount) {
                                 <div
                                     v-for="pkg in packages"
                                     :key="pkg.id"
-                                    style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-columns: 200px 1fr; background: white; transition: box-shadow 0.2s;"
+                                    class="turget-package-card-row"
                                 >
                                     <img
                                         :src="pkg.cover_image || '/images/destinations/bali_hero.jpg'"
                                         :alt="tr(pkg.title)"
-                                        style="width: 100%; height: 100%; object-fit: cover;"
+                                        class="turget-package-card-thumb"
                                     />
-                                    <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div class="turget-package-card-body">
                                         <div>
-                                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
-                                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--color-navy-950);">
+                                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem; gap: 0.5rem; flex-wrap: wrap;">
+                                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--color-navy-950);">
                                                     {{ tr(pkg.title) }}
                                                 </h3>
                                                 <span class="turget-badge" style="margin: 0; font-size: 0.7rem; background: var(--color-surface-subtle);">
@@ -213,7 +213,7 @@ function formatPrice(amount) {
                                             </p>
                                         </div>
 
-                                        <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 0.75rem; border-top: 1px solid var(--color-border-subtle);">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 0.75rem; border-top: 1px solid var(--color-border-subtle); flex-wrap: wrap; gap: 0.5rem;">
                                             <div>
                                                 <div style="font-size: 0.75rem; color: var(--color-text-muted);">Mulai dari</div>
                                                 <div style="font-size: 1.15rem; font-weight: 800; color: var(--color-blue-600);">
@@ -238,24 +238,24 @@ function formatPrice(amount) {
 
                         <!-- Destinations of Expertise -->
                         <div class="turget-admin-card" style="box-shadow: var(--shadow-sm);">
-                            <h2 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
+                            <h2 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
                                 Destinasi yang Dikuasai
                             </h2>
 
-                            <div v-if="destinations.length > 0" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div v-if="destinations.length > 0" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
                                 <Link
                                     v-for="dest in destinations"
                                     :key="dest.id"
                                     :href="`/places/${dest.slug}`"
-                                    style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); padding: 0.85rem; display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; background: white;"
+                                    style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); padding: 0.75rem; display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; background: white;"
                                 >
                                     <img
                                         :src="dest.cover_image || '/images/destinations/bali_hero.jpg'"
                                         :alt="tr(dest.name)"
-                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;"
+                                        style="width: 44px; height: 44px; border-radius: var(--radius-sm); object-fit: cover;"
                                     />
                                     <div>
-                                        <div style="font-weight: 700; color: var(--color-navy-950); font-size: 0.88rem;">
+                                        <div style="font-weight: 700; color: var(--color-navy-950); font-size: 0.85rem;">
                                             {{ tr(dest.name) }}
                                         </div>
                                         <div style="font-size: 0.75rem; color: var(--color-blue-600);">
@@ -271,7 +271,7 @@ function formatPrice(amount) {
                     </div>
 
                     <!-- Right Column: Verification & Trust Sidebar -->
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="turget-sticky-booking-sidebar">
                         <!-- Verified Trust Card -->
                         <div class="turget-admin-card" style="border-left: 4px solid var(--color-blue-600); box-shadow: var(--shadow-sm);">
                             <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem;">

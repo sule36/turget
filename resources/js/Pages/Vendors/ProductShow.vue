@@ -59,11 +59,11 @@ function getBookingModelLabel(model) {
             </div>
         </nav>
 
-        <main class="turget-container" style="padding: 2.5rem 0 5rem;">
+        <main class="turget-container" style="padding: 2.25rem 0 5rem;">
             <!-- Top Hero Grid: Gallery & Main Info -->
-            <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 2.5rem; margin-bottom: 3.5rem; align-items: start;">
+            <div class="turget-detail-layout" style="margin-bottom: 2.5rem;">
                 <!-- Main Image -->
-                <div style="border-radius: var(--radius-2xl); overflow: hidden; background: var(--color-sand-200); height: 420px; box-shadow: var(--shadow-md); position: relative;">
+                <div style="border-radius: var(--radius-2xl); overflow: hidden; background: var(--color-sand-200); max-height: 420px; box-shadow: var(--shadow-md); position: relative;">
                     <img
                         :src="product.cover_image || 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1200&auto=format&fit=crop&q=80'"
                         :alt="tr(product.name)"
@@ -77,7 +77,7 @@ function getBookingModelLabel(model) {
                 </div>
 
                 <!-- Price & Booking Card -->
-                <div class="turget-card" style="padding: 2.25rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-2xl);">
+                <div class="turget-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-2xl);">
                     <div>
                         <!-- Location & Destination Tag -->
                         <div v-if="product.destination" style="display: flex; align-items: center; gap: 0.4rem; color: var(--color-blue-600); font-size: 0.88rem; font-weight: 700; margin-bottom: 0.6rem;">
@@ -87,7 +87,7 @@ function getBookingModelLabel(model) {
                             </Link>
                         </div>
 
-                        <h1 style="font-family: var(--font-serif); font-size: 2.15rem; font-weight: 700; color: var(--color-navy-950); margin: 0 0 1rem; line-height: 1.25;">
+                        <h1 class="turget-detail-title">
                             {{ tr(product.name) }}
                         </h1>
 
@@ -154,10 +154,10 @@ function getBookingModelLabel(model) {
             </div>
 
             <!-- Content Details Tabs: Inclusions, Exclusions, Terms -->
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+            <div class="turget-detail-layout">
                 <div>
                     <!-- Description -->
-                    <div class="turget-card" style="padding: 2rem; margin-bottom: 2rem;">
+                    <div class="turget-card" style="padding: 1.75rem; margin-bottom: 2rem;">
                         <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
                             {{ locale === 'en' ? 'Service Description & Overview' : 'Deskripsi Layanan' }}
                         </h2>
@@ -167,12 +167,12 @@ function getBookingModelLabel(model) {
                     </div>
 
                     <!-- Inclusions & Exclusions -->
-                    <div class="turget-card" style="padding: 2rem; margin-bottom: 2rem;">
+                    <div class="turget-card" style="padding: 1.75rem; margin-bottom: 2rem;">
                         <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1.5rem;">
                             {{ locale === 'en' ? 'Inclusions & Exclusions' : 'Fasilitas Termasuk & Tidak Termasuk' }}
                         </h3>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="turget-two-col-grid">
                             <div>
                                 <h4 style="color: var(--color-green-700); font-size: 1rem; margin-bottom: 0.75rem;">
                                     ✅ {{ locale === 'en' ? 'Included' : 'Sudah Termasuk' }}
@@ -213,7 +213,7 @@ function getBookingModelLabel(model) {
                 </div>
 
                 <!-- Right Sidebar: Tour Package Add-on Links -->
-                <div>
+                <div class="turget-sticky-booking-sidebar">
                     <!-- Tour Packages that incorporate this add-on -->
                     <div v-if="product.tourPackages?.length > 0" class="turget-card" style="padding: 1.75rem; margin-bottom: 2rem;">
                         <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-navy-950); margin-bottom: 1rem;">
