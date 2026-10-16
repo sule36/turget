@@ -1473,97 +1473,93 @@ button, input, select, textarea {
 
 
 /* ==========================================================================
-   WHATSAPP CONCIERGE FLOATING WIDGET
+   LIVE CHAT & ANTI-OFF-PLATFORM SECURITY (TOKOPEDIA / SHOPEE ESCROW STANDARD)
    ========================================================================== */
-.turget-wa-concierge {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 40;
-}
-
-.turget-wa-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
-    padding: 0.5rem 1.1rem 0.5rem 0.65rem;
-    border-radius: var(--radius-pill);
-    text-decoration: none;
-    box-shadow: 0 4px 18px rgba(18, 140, 126, 0.35);
-    transition: var(--transition-base);
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.turget-wa-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(18, 140, 126, 0.45);
-    background: linear-gradient(135deg, #2ae06d, #0f7a6d);
-    color: white;
-}
-
-.turget-wa-icon {
-    width: 34px;
-    height: 34px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+.turget-chat-security-banner {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1px solid #FCD34D;
+    border-left: 4px solid #D97706;
+    padding: 0.9rem 1.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.85rem;
+    color: #92400E;
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.08);
+}
+
+.turget-chat-security-icon {
+    font-size: 1.4rem;
+    line-height: 1;
     flex-shrink: 0;
 }
 
-.turget-wa-text {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    line-height: 1.15;
-}
-
-.turget-wa-label {
-    font-size: 0.72rem;
-    opacity: 0.9;
-    font-weight: 500;
-}
-
-.turget-wa-sub {
-    font-size: 0.85rem;
+.turget-chat-security-title {
     font-weight: 700;
+    color: #78350F;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-.turget-wa-online-dot {
-    width: 8px;
-    height: 8px;
-    background: #4ADE80;
-    border-radius: 50%;
-    border: 1.5px solid white;
-    position: absolute;
-    top: 6px;
-    left: 28px;
+.turget-chat-masked-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+    padding: 0.25rem 0.6rem;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: var(--radius-pill);
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: #B91C1C;
 }
 
-@media (max-width: 640px) {
-    .turget-wa-concierge {
-        bottom: 1.15rem;
-        right: 1.15rem;
-    }
-    .turget-wa-btn {
-        padding: 0;
-        border-radius: 50%;
-        width: 46px;
-        height: 46px;
-        justify-content: center;
-    }
-    .turget-wa-text {
-        display: none;
-    }
-    .turget-wa-online-dot {
-        top: 4px;
-        right: 4px;
-        left: auto;
-    }
+.turget-chat-typing-warning {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.85rem;
+    background: #FEF3C7;
+    border: 1px dashed #D97706;
+    border-radius: var(--radius-md);
+    font-size: 0.78rem;
+    color: #92400E;
+    font-weight: 600;
+    margin-bottom: 0.65rem;
+    animation: turgetFadeIn 0.2s ease-in-out;
+}
+
+.turget-chat-quick-chips {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    scrollbar-width: thin;
+}
+
+.turget-chat-chip-btn {
+    white-space: nowrap;
+    background: white;
+    border: 1px solid var(--color-border-subtle);
+    color: var(--color-navy-950);
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.turget-chat-chip-btn:hover {
+    background: var(--color-blue-50);
+    border-color: var(--color-blue-200);
+    color: var(--color-blue-600);
 }
 
 /* ==========================================================================

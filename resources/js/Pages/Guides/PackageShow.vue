@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
 
@@ -16,6 +16,12 @@ function formatPrice(amount) {
         currency: 'IDR',
         maximumFractionDigits: 0,
     }).format(amount);
+}
+
+function startChatWithGuide() {
+    router.post('/chat/start', {
+        target_user_id: props.guide.user_id,
+    });
 }
 </script>
 
@@ -191,14 +197,24 @@ function formatPrice(amount) {
                             </div>
 
                             <Link
-                                :href="`/guides/${guide.slug}`"
+                                :href="`/checkout/package/${package.slug}`"
                                 class="turget-btn turget-btn-primary"
-                                style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.85rem;"
+                                style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.85rem; font-weight: 700;"
                             >
-                                Pesan / Konsultasi Paket Ini
+                                ⚡ {{ locale === 'id' ? 'Pesan Paket Ini (Escrow Aman)' : 'Book Package (Protected Escrow)' }}
                             </Link>
-                            <div style="text-align: center; margin-top: 0.75rem; font-size: 0.75rem; color: var(--color-text-muted);">
-                                🔒 Pembayaran aman dilindungi Rekening Escrow Turget
+
+                            <button
+                                type="button"
+                                @click="startChatWithGuide"
+                                class="turget-btn turget-btn-secondary"
+                                style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.75rem; font-weight: 600; margin-top: 0.5rem;"
+                            >
+                                💬 {{ locale === 'id' ? 'Tanya / Chat Pemandu' : 'Chat with Guide' }}
+                            </button>
+
+                            <div style="text-align: center; margin-top: 0.75rem; font-size: 0.73rem; color: var(--color-text-muted); line-height: 1.4;">
+                                🔒 {{ locale === 'id' ? 'Chat aman & pembayaran terlindungi Rekening Bersama Escrow Turget.id' : 'Secure chat and payments protected by Turget.id Escrow' }}
                             </div>
                         </div>
 

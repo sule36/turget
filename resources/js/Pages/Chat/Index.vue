@@ -54,14 +54,14 @@ const { t, locale } = useI18n();
                         class="turget-card-hover"
                     >
                         <div style="display: flex; align-items: center; gap: 1.25rem;">
-                            <!-- Avatar Initial -->
-                            <div style="width: 3.25rem; height: 3.25rem; border-radius: 50%; background: var(--color-blue-50); color: var(--color-blue-600); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem;">
-                                {{ (conv.user_one?.name || 'U').charAt(0) }}
+                            <!-- Avatar Initial of Other User -->
+                            <div style="width: 3.25rem; height: 3.25rem; border-radius: 50%; background: var(--color-blue-50); color: var(--color-blue-600); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; border: 2px solid var(--color-blue-200); flex-shrink: 0;">
+                                {{ ((conv.user_one?.id === $page.props.auth?.user?.id ? conv.user_two?.name : conv.user_one?.name) || 'U').charAt(0) }}
                             </div>
 
                             <div>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--color-navy-950);">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; flex-wrap: wrap;">
+                                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--color-navy-950); margin: 0;">
                                         {{ conv.user_one?.id === $page.props.auth?.user?.id ? conv.user_two?.name : conv.user_one?.name }}
                                     </h3>
                                     <span v-if="conv.trip_inquiry" class="turget-badge" style="background: var(--color-sand-100); color: var(--color-navy-900); font-size: 0.72rem; margin: 0;">

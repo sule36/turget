@@ -23,14 +23,6 @@ function switchLang(lang) {
         preserveState: false,
     });
 }
-
-const waConciergeLink = computed(() => {
-    const phone = '6281234567890';
-    const msg = locale.value === 'id'
-        ? 'Halo Turget.id! Saya ingin konsultasi perjalanan dan rekomendasi pemandu lokal.'
-        : 'Hello Turget.id! I would like to consult about travel planning and local guide recommendations.';
-    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-});
 </script>
 
 <template>
@@ -343,27 +335,5 @@ const waConciergeLink = computed(() => {
                 </div>
             </div>
         </footer>
-
-        <!-- Floating WhatsApp Concierge Widget -->
-        <aside class="turget-wa-concierge" aria-label="WhatsApp Concierge">
-            <a
-                :href="waConciergeLink"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="turget-wa-btn"
-                :title="locale === 'id' ? 'Konsultasi Perjalanan via WhatsApp' : 'Travel Consultation via WhatsApp'"
-            >
-                <div class="turget-wa-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                        <path d="M12.031 2C6.516 2 2.031 6.484 2.031 12c0 1.834.496 3.564 1.364 5.064L2 22l5.088-1.336A9.92 9.92 0 0 0 12.031 22c5.516 0 10-4.484 10-10s-4.484-10-10-10zm0 18.25c-1.587 0-3.097-.432-4.409-1.2l-.316-.184-3.272.86.872-3.192-.204-.328A8.204 8.204 0 0 1 3.781 12c0-4.549 3.701-8.25 8.25-8.25s8.25 3.701 8.25 8.25-3.701 8.25-8.25 8.25zm4.524-6.177c-.248-.124-1.464-.724-1.691-.807-.227-.083-.393-.124-.558.124-.165.248-.641.807-.785.972-.145.165-.289.186-.537.062s-1.047-.386-1.996-1.232c-.739-.659-1.238-1.473-1.383-1.721-.145-.248-.015-.382.109-.505.112-.111.248-.289.372-.434.124-.145.165-.248.248-.413.083-.165.041-.31-.021-.434s-.558-1.344-.764-1.841c-.201-.484-.405-.418-.558-.426l-.475-.008c-.165 0-.434.062-.661.31-.227.248-.868.848-.868 2.068s.889 2.399 1.013 2.564c.124.165 1.75 2.672 4.239 3.747.592.256 1.055.409 1.415.524.595.189 1.137.162 1.565.098.477-.071 1.464-.599 1.671-1.178.207-.579.207-1.075.145-1.178-.062-.104-.227-.165-.475-.289z"/>
-                    </svg>
-                </div>
-                <div class="turget-wa-text">
-                    <span class="turget-wa-label">{{ locale === 'id' ? 'Butuh Rekomendasi?' : 'Need Help?' }}</span>
-                    <span class="turget-wa-sub">WhatsApp Concierge</span>
-                </div>
-                <span class="turget-wa-online-dot"></span>
-            </a>
-        </aside>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
 
@@ -20,6 +20,12 @@ function formatPrice(amount) {
         currency: 'IDR',
         maximumFractionDigits: 0,
     }).format(amount);
+}
+
+function startChatWithGuide() {
+    router.post('/chat/start', {
+        target_user_id: props.guide.user_id,
+    });
 }
 </script>
 
@@ -100,10 +106,32 @@ function formatPrice(amount) {
                             <span style="font-size: 0.85rem; font-weight: 400; color: var(--color-sand-200);">/ hari</span>
                         </div>
 
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <a href="#packages-section" class="turget-btn turget-btn-primary" style="justify-content: center; width: 100%;">
-                                Lihat Paket Wisata ↓
+                        <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                            <button
+                                type="button"
+                                @click="startChatWithGuide"
+                                class="turget-btn turget-btn-primary"
+                                style="justify-content: center; width: 100%; font-weight: 700;"
+                            >
+                                💬 {{ locale === 'id' ? 'Chat Langsung Pemandu' : 'Chat with Guide' }}
+                            </button>
+                            <Link
+                                :href="`/trips/plan?region_id=${guide.region_id}`"
+                                class="turget-btn"
+                                style="justify-content: center; width: 100%; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.25); font-weight: 600;"
+                            >
+                                ✨ {{ locale === 'id' ? 'Rencanakan Trip Kustom' : 'Plan Custom Trip' }}
+                            </Link>
+                            <a
+                                href="#packages-section"
+                                class="turget-btn"
+                                style="justify-content: center; width: 100%; background: transparent; color: var(--color-sand-200); border: 1px solid rgba(255,255,255,0.15);"
+                            >
+                                🎒 {{ locale === 'id' ? 'Lihat Paket Wisata ↓' : 'Browse Packages ↓' }}
                             </a>
+                        </div>
+                        <div style="font-size: 0.73rem; color: var(--color-sand-300); text-align: center; margin-top: 0.75rem; line-height: 1.35;">
+                            🛡️ {{ locale === 'id' ? 'Chat aman terlindungi standar Tokopedia/Shopee. Kontak luar disamarkan otomatis.' : 'Secure chat with automatic contact masking.' }}
                         </div>
                     </div>
                 </div>

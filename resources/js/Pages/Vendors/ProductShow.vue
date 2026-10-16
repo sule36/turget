@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
 
@@ -17,6 +17,14 @@ function formatPrice(amount) {
         currency: 'IDR',
         maximumFractionDigits: 0,
     }).format(amount);
+}
+
+function startChatWithVendor() {
+    if (props.product.vendor?.user_id) {
+        router.post('/chat/start', {
+            target_user_id: props.product.vendor.user_id,
+        });
+    }
 }
 
 function getUnitLabel(unit) {
@@ -142,14 +150,27 @@ function getBookingModelLabel(model) {
                     </div>
 
                     <!-- Booking Inquiry CTA -->
-                    <a
-                        :href="`https://wa.me/${product.vendor?.phone?.replace(/[^0-9]/g, '')}?text=Halo%20${encodeURIComponent(product.vendor?.business_name || '')},%20saya%20ingin%20memesan%20layanan:%20${encodeURIComponent(tr(product.name))}%20melalui%20Turget.id`"
-                        target="_blank"
-                        class="turget-btn turget-btn-primary"
-                        style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1.05rem; font-weight: 700;"
-                    >
-                        ⚡ Pesan Sekarang via Vendor
-                    </a>
+                    <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                        <Link
+                            :href="`/checkout/vendor-product/${product.slug}`"
+                            class="turget-btn turget-btn-primary"
+                            style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; font-weight: 700;"
+                        >
+                            ⚡ {{ locale === 'en' ? 'Book Service (Protected Escrow)' : 'Pesan Layanan Ini (Escrow Aman)' }}
+                        </Link>
+                        <button
+                            v-if="product.vendor"
+                            type="button"
+                            @click="startChatWithVendor"
+                            class="turget-btn turget-btn-secondary"
+                            style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem; font-weight: 600;"
+                        >
+                            💬 {{ locale === 'en' ? 'Chat Directly with Vendor' : 'Tanya / Chat Vendor' }}
+                        </button>
+                    </div>
+                    <div style="font-size: 0.73rem; color: var(--color-text-muted); text-align: center; margin-top: 0.65rem; line-height: 1.4;">
+                        🔒 {{ locale === 'en' ? 'All chats & transactions protected by Turget.id Escrow' : 'Chat & transaksi aman dilindungi Rekening Bersama Escrow Turget.id' }}
+                    </div>
                 </div>
             </div>
 

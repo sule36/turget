@@ -257,6 +257,14 @@ class CustomTripPlannerAndMessagingTest extends TestCase
         ]);
     }
 
+    public function test_guest_is_redirected_to_login_when_initiating_chat(): void
+    {
+        $response = $this->post('/chat/start', [
+            'target_user_id' => $this->guideUser->id,
+        ]);
+        $response->assertRedirect('/login');
+    }
+
     public function test_anti_off_platform_service_masks_phone_and_whatsapp(): void
     {
         $antiLeak = new AntiOffPlatformService();
@@ -279,6 +287,30 @@ class CustomTripPlannerAndMessagingTest extends TestCase
         $this->assertTrue($emailTest['is_flagged']);
         $this->assertContains('email_address', $emailTest['flagged_reasons']);
         $this->assertStringNotContainsString('pandu.bali@gmail.com', $emailTest['clean_body']);
+
+        // Spaced phone number bypass attempt (0 8 1 2 ...)
+        $spacedPhoneTest = $antiLeak->inspect('hubungi saya di 0 8 1 2 3 4 5 6 7 8 9 ya');
+        $this->assertTrue($spacedPhoneTest['is_flagged']);
+        $this->assertContains('phone_number', $spacedPhoneTest['flagged_reasons']);
+        $this->assertStringContainsString('[Kontak disembunyikan demi keamanan transaksi Turget.id]', $spacedPhoneTest['clean_body']);
+
+        // Direct bank transfer bypass attempt
+        $bankTest = $antiLeak->inspect('bisa transfer bca 8830123456 langsung ke saya');
+        $this->assertTrue($bankTest['is_flagged']);
+        $this->assertContains('bank_payment_bypass', $bankTest['flagged_reasons']);
+        $this->assertStringContainsString('[Kontak disembunyikan demi keamanan transaksi Turget.id]', $bankTest['clean_body']);
+
+        // Social media handle attempt
+        $socialTest = $antiLeak->inspect('kontak saya via ig: @bali_tourguide_official');
+        $this->assertTrue($socialTest['is_flagged']);
+        $this->assertContains('social_media_contact', $socialTest['flagged_reasons']);
+        $this->assertStringContainsString('[Kontak disembunyikan demi keamanan transaksi Turget.id]', $socialTest['clean_body']);
+
+        // Spelled-out phone number attempt
+        $spelledTest = $antiLeak->inspect('nomor saya nol delapan satu dua tiga empat lima enam tujuh delapan');
+        $this->assertTrue($spelledTest['is_flagged']);
+        $this->assertContains('phone_number', $spelledTest['flagged_reasons']);
+        $this->assertStringContainsString('[Kontak disembunyikan demi keamanan transaksi Turget.id]', $spelledTest['clean_body']);
 
         // Clean message passes unflagged
         $cleanTest = $antiLeak->inspect('Kita bertemu di lobi hotel jam 8 pagi dengan pakaian nyaman.');

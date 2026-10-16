@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { useI18n } from '@/composables/useI18n';
 
@@ -16,6 +16,12 @@ function formatPrice(amount) {
         currency: 'IDR',
         maximumFractionDigits: 0,
     }).format(amount);
+}
+
+function startChatWithVendor() {
+    router.post('/chat/start', {
+        target_user_id: props.vendor.user_id,
+    });
 }
 
 function getUnitLabel(unit) {
@@ -208,18 +214,18 @@ function getUnitLabel(unit) {
                             </div>
                         </div>
 
-                        <!-- Direct WhatsApp / Phone Button -->
-                        <a
-                            :href="`https://wa.me/${vendor.phone?.replace(/[^0-9]/g, '')}?text=Halo%20${encodeURIComponent(vendor.business_name)},%20saya%20melihat%20layanan%20Anda%20di%20Turget.id`"
-                            target="_blank"
-                            class="turget-btn"
-                            style="width: 100%; justify-content: center; background: #25D366; color: white; border: none; font-weight: 700; margin-bottom: 0.75rem;"
+                        <!-- Direct In-App Live Chat Button -->
+                        <button
+                            type="button"
+                            @click="startChatWithVendor"
+                            class="turget-btn turget-btn-primary"
+                            style="width: 100%; justify-content: center; font-weight: 700; margin-bottom: 0.75rem;"
                         >
-                            💬 Hubungi WhatsApp Vendor
-                        </a>
+                            💬 {{ locale === 'en' ? 'Chat Directly with Vendor' : 'Chat Langsung dengan Vendor' }}
+                        </button>
 
-                        <div style="font-size: 0.78rem; color: var(--color-text-subtle); text-align: center;">
-                            🛡️ Dijamin oleh Kebijakan Keamanan Transaksi Turget.id
+                        <div style="font-size: 0.78rem; color: var(--color-text-subtle); text-align: center; line-height: 1.4;">
+                            🛡️ {{ locale === 'en' ? 'Protected by Turget.id Escrow & anti-disintermediation security.' : 'Chat aman dilindungi oleh sistem keamanan Rekening Bersama Escrow Turget.id.' }}
                         </div>
 
                         <!-- Nearby Destinations -->
