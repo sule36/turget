@@ -90,16 +90,27 @@ class GuideController extends Controller
                     ->orderBy('date')
                     ->take(30);
             },
-            'reviews' => function ($q) {
-                $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
-            },
         ]);
+
+        $reviews = collect();
+        if (\Illuminate\Support\Facades\Schema::hasTable('reviews')) {
+            try {
+                $guide->load([
+                    'reviews' => function ($q) {
+                        $q->published()->with('traveler')->latest('id')->take(10);
+                    },
+                ]);
+                $reviews = $guide->reviews ?? collect();
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Reviews query skipped for guide: ' . $e->getMessage());
+            }
+        }
 
         return Inertia::render('Guides/Show', [
             'guide' => $guide,
             'packages' => $guide->packages,
             'destinations' => $guide->destinations,
-            'reviews' => $guide->reviews,
+            'reviews' => $reviews,
         ]);
     }
 
@@ -112,15 +123,26 @@ class GuideController extends Controller
             'guide.region',
             'guide.country',
             'destination.region',
-            'reviews' => function ($q) {
-                $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
-            },
         ]);
+
+        $reviews = collect();
+        if (\Illuminate\Support\Facades\Schema::hasTable('reviews')) {
+            try {
+                $package->load([
+                    'reviews' => function ($q) {
+                        $q->published()->with('traveler')->latest('id')->take(10);
+                    },
+                ]);
+                $reviews = $package->reviews ?? collect();
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Reviews query skipped for package: ' . $e->getMessage());
+            }
+        }
 
         return Inertia::render('Guides/PackageShow', [
             'package' => $package,
             'guide' => $package->guide,
-            'reviews' => $package->reviews,
+            'reviews' => $reviews,
         ]);
     }
 }

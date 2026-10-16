@@ -151,11 +151,22 @@ class VendorController extends Controller
                 'products' => function ($q) {
                     $q->published()->orderByDesc('is_featured')->latest('id');
                 },
-                'reviews' => function ($q) {
-                    $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
-                },
             ])
             ->firstOrFail();
+
+        $reviews = collect();
+        if (\Illuminate\Support\Facades\Schema::hasTable('reviews')) {
+            try {
+                $vendor->load([
+                    'reviews' => function ($q) {
+                        $q->published()->with('traveler')->latest('id')->take(10);
+                    },
+                ]);
+                $reviews = $vendor->reviews ?? collect();
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Reviews query skipped for vendor: ' . $e->getMessage());
+            }
+        }
 
         // Related / Nearby destinations for this vendor
         $nearbyDestinations = [];
@@ -169,7 +180,7 @@ class VendorController extends Controller
         return Inertia::render('Vendors/Show', [
             'vendor' => $vendor,
             'nearbyDestinations' => $nearbyDestinations,
-            'reviews' => $vendor->reviews,
+            'reviews' => $reviews,
         ]);
     }
 

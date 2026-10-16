@@ -146,8 +146,13 @@ class BookingCheckoutController extends Controller
             'addons.vendorProduct',
             'transactions',
             'escrowLedgers',
-            'review',
         ]);
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('reviews')) {
+            try {
+                $booking->load('review');
+            } catch (\Throwable $e) {}
+        }
 
         return Inertia::render('Bookings/Show', [
             'booking' => $booking,
@@ -189,8 +194,13 @@ class BookingCheckoutController extends Controller
      */
     public function myBookings(Request $request): Response
     {
+        $relations = ['tourPackage', 'vendorProduct', 'guide', 'vendor'];
+        if (\Illuminate\Support\Facades\Schema::hasTable('reviews')) {
+            $relations[] = 'review';
+        }
+
         $bookings = Booking::where('traveler_id', $request->user()->id)
-            ->with(['tourPackage', 'vendorProduct', 'guide', 'vendor', 'review'])
+            ->with($relations)
             ->latest('id')
             ->paginate(10);
 
