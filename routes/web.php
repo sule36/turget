@@ -25,6 +25,8 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TripInquiryController;
 use App\Http\Controllers\TripProposalController;
@@ -110,6 +112,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-bookings', [BookingCheckoutController::class, 'myBookings'])->name('bookings.my');
     Route::post('/bookings/{booking}/complete', [BookingCheckoutController::class, 'completeTrip'])->name('bookings.complete');
     Route::post('/bookings/{booking}/refund', [BookingCheckoutController::class, 'requestRefund'])->name('bookings.refund');
+    Route::get('/bookings/{booking}/voucher', [BookingCheckoutController::class, 'voucher'])->name('bookings.voucher');
+    Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('bookings.review');
+
+    // Traveler Profile & Account Settings
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::match(['put', 'patch'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::match(['put', 'patch'], '/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     // Payout Wallet & Balance Withdrawal (PRD §16.2)
     Route::get('/payouts', [PayoutController::class, 'index'])->name('payouts.index');

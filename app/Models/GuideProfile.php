@@ -76,6 +76,11 @@ class GuideProfile extends Model
         return $this->hasMany(GuideAvailability::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function verifier(): BelongsTo
     {
         return $this->belongsTo(User::class, 'verified_by');

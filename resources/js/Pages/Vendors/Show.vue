@@ -6,6 +6,10 @@ import { useI18n } from '@/composables/useI18n';
 const props = defineProps({
     vendor: Object,
     nearbyDestinations: Array,
+    reviews: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const { t, tr, locale } = useI18n();
@@ -174,6 +178,85 @@ function getUnitLabel(unit) {
                         <p style="color: var(--color-text-body); font-size: 0.95rem; line-height: 1.6;">
                             {{ tr(vendor.cancellation_policy) || 'Pembatalan gratis hingga 48 jam sebelum jadwal penggunaan layanan. Setelahnya dikenakan biaya penalti sesuai ketentuan operasional vendor.' }}
                         </p>
+                    </div>
+
+                    <!-- Verified Reviews & Ratings Section -->
+                    <div class="turget-card" style="padding: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                                    <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--color-navy-950); margin: 0;">
+                                        ⭐ {{ locale === 'en' ? 'Verified Traveler Reviews' : 'Ulasan Wisatawan Terverifikasi' }}
+                                    </h3>
+                                    <span class="turget-badge" style="margin: 0; background: var(--color-emerald-50); color: var(--color-emerald-700); border-color: var(--color-emerald-200);">
+                                        ✓ 100% Pasca-Selesai
+                                    </span>
+                                </div>
+                                <p style="font-size: 0.88rem; color: var(--color-text-muted); margin: 0;">
+                                    {{ locale === 'en' ? 'Only travelers who have completed bookings with this vendor can leave a review.' : 'Hanya wisatawan yang telah menyelesaikan reservasi layanan ini yang dapat memberikan penilaian resmi.' }}
+                                </p>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 0.75rem; background: var(--color-sand-50); padding: 0.6rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle);">
+                                <div style="font-size: 2rem; font-weight: 800; color: var(--color-navy-950); line-height: 1;">
+                                    {{ Number(vendor.rating_avg || 5.0).toFixed(1) }}
+                                </div>
+                                <div>
+                                    <div style="color: #f59e0b; font-size: 1rem; letter-spacing: 1px;">
+                                        ★★★★★
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">
+                                        {{ vendor.reviews_count || reviews.length }} {{ locale === 'en' ? 'verified reviews' : 'ulasan terverifikasi' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reviews List -->
+                        <div v-if="reviews && reviews.length > 0" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div
+                                v-for="rev in reviews"
+                                :key="rev.id"
+                                style="padding: 1rem; border-radius: var(--radius-md); background: white; border: 1px solid var(--color-border-subtle);"
+                            >
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-navy-900); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.88rem;">
+                                            {{ rev.traveler?.name ? rev.traveler.name.charAt(0) : 'W' }}
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 700; font-size: 0.9rem; color: var(--color-navy-950); display: flex; align-items: center; gap: 0.4rem;">
+                                                {{ rev.traveler?.name || 'Wisatawan Turget' }}
+                                                <span style="font-size: 0.72rem; color: var(--color-emerald-700); background: var(--color-emerald-50); padding: 1px 6px; border-radius: 4px; font-weight: 600;">
+                                                    ✓ Verified Guest
+                                                </span>
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: var(--color-text-muted);">
+                                                {{ new Date(rev.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 2px; color: #f59e0b; font-size: 0.95rem;">
+                                        <span v-for="star in 5" :key="star">
+                                            {{ star <= rev.rating ? '★' : '☆' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.88rem; color: var(--color-navy-950); line-height: 1.5; margin: 0; white-space: pre-line;">
+                                    {{ rev.comment || 'Wisatawan memberikan rating bintang tanpa ulasan tertulis.' }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div v-else style="text-align: center; padding: 2.5rem 1rem; background: var(--color-surface-subtle); border-radius: var(--radius-md); border: 1px dashed var(--color-border-subtle);">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏨</div>
+                            <div style="font-weight: 700; color: var(--color-navy-950); margin-bottom: 0.25rem;">
+                                {{ locale === 'en' ? 'No Public Reviews Yet' : 'Belum Ada Ulasan Publik' }}
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--color-text-muted); max-width: 440px; margin: 0 auto;">
+                                {{ locale === 'en' ? 'Be the first traveler to book and review this vendor after your experience!' : 'Jadilah wisatawan pertama yang memesan layanan dari vendor ini dan bagikan ulasan Anda!' }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 

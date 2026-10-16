@@ -113,9 +113,17 @@ function switchLang(lang) {
 
                             <!-- User State (Desktop) -->
                             <template v-if="authUser">
-                                <div class="turget-user-chip" style="display: flex; align-items: center; gap: 0.65rem;">
+                                <div class="turget-user-chip" style="display: flex; align-items: center; gap: 0.5rem;">
                                     <Link href="/my-trips" style="text-decoration: none; font-size: 0.82rem; font-weight: 700; color: var(--color-navy-950);">
                                         {{ authUser.name.split(' ')[0] }}
+                                    </Link>
+                                    <Link
+                                        href="/profile"
+                                        class="turget-btn turget-btn-secondary turget-btn-sm"
+                                        style="padding: 0.25rem 0.5rem; font-size: 0.72rem;"
+                                        :title="locale === 'id' ? 'Pengaturan Akun' : 'Account Settings'"
+                                    >
+                                        ⚙️ Profil
                                     </Link>
                                     <Link
                                         v-if="authUser?.roles?.includes('tour_guide') || authUser?.roles?.includes('vendor')"
@@ -215,6 +223,9 @@ function switchLang(lang) {
                         </Link>
                         <Link href="/chat" class="turget-mobile-sublink" @click="showMobileNav = false">
                             💬 {{ locale === 'id' ? 'Pesan & Diskusi' : 'Messages' }}
+                        </Link>
+                        <Link href="/profile" class="turget-mobile-sublink" @click="showMobileNav = false">
+                            ⚙️ {{ locale === 'id' ? 'Pengaturan Profil' : 'Profile Settings' }}
                         </Link>
                         <Link v-if="authUser?.roles?.includes('tour_guide') || authUser?.roles?.includes('vendor')" href="/payouts" class="turget-mobile-sublink" @click="showMobileNav = false">
                             💰 {{ locale === 'id' ? 'Dompet & Pencairan' : 'Payouts' }}

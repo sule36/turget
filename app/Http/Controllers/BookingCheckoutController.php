@@ -146,9 +146,40 @@ class BookingCheckoutController extends Controller
             'addons.vendorProduct',
             'transactions',
             'escrowLedgers',
+            'review',
         ]);
 
         return Inertia::render('Bookings/Show', [
+            'booking' => $booking,
+        ]);
+    }
+
+    /**
+     * Official Printable E-Voucher & Travel Receipt with Escrow Protection Seal.
+     */
+    public function voucher(Request $request, Booking $booking): Response
+    {
+        $user = $request->user();
+        if ($booking->traveler_id !== $user->id 
+            && $booking->guide?->user_id !== $user->id 
+            && $booking->vendor?->user_id !== $user->id 
+            && ! $user->hasRole('super_admin')) {
+            abort(403);
+        }
+
+        $booking->load([
+            'traveler',
+            'guide.region',
+            'vendor.region',
+            'tourPackage.destination',
+            'vendorProduct',
+            'tripProposal',
+            'addons.vendorProduct',
+            'transactions',
+            'escrowLedgers',
+        ]);
+
+        return Inertia::render('Bookings/Voucher', [
             'booking' => $booking,
         ]);
     }
@@ -159,7 +190,7 @@ class BookingCheckoutController extends Controller
     public function myBookings(Request $request): Response
     {
         $bookings = Booking::where('traveler_id', $request->user()->id)
-            ->with(['tourPackage', 'vendorProduct', 'guide', 'vendor'])
+            ->with(['tourPackage', 'vendorProduct', 'guide', 'vendor', 'review'])
             ->latest('id')
             ->paginate(10);
 

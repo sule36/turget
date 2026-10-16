@@ -145,9 +145,16 @@ class VendorController extends Controller
     public function show(string $slug): Response
     {
         $vendor = VendorProfile::where('slug', $slug)
-            ->with(['region.parent', 'country', 'products' => function ($q) {
-                $q->published()->orderByDesc('is_featured')->latest('id');
-            }])
+            ->with([
+                'region.parent',
+                'country',
+                'products' => function ($q) {
+                    $q->published()->orderByDesc('is_featured')->latest('id');
+                },
+                'reviews' => function ($q) {
+                    $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
+                },
+            ])
             ->firstOrFail();
 
         // Related / Nearby destinations for this vendor
@@ -162,6 +169,7 @@ class VendorController extends Controller
         return Inertia::render('Vendors/Show', [
             'vendor' => $vendor,
             'nearbyDestinations' => $nearbyDestinations,
+            'reviews' => $vendor->reviews,
         ]);
     }
 

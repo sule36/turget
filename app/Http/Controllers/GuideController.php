@@ -90,12 +90,16 @@ class GuideController extends Controller
                     ->orderBy('date')
                     ->take(30);
             },
+            'reviews' => function ($q) {
+                $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
+            },
         ]);
 
         return Inertia::render('Guides/Show', [
             'guide' => $guide,
             'packages' => $guide->packages,
             'destinations' => $guide->destinations,
+            'reviews' => $guide->reviews,
         ]);
     }
 
@@ -108,11 +112,15 @@ class GuideController extends Controller
             'guide.region',
             'guide.country',
             'destination.region',
+            'reviews' => function ($q) {
+                $q->published()->with('traveler:id,name,avatar_url')->latest('id')->take(10);
+            },
         ]);
 
         return Inertia::render('Guides/PackageShow', [
             'package' => $package,
             'guide' => $package->guide,
+            'reviews' => $package->reviews,
         ]);
     }
 }

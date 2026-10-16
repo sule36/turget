@@ -72,6 +72,11 @@ class VendorProfile extends Model
         return $this->hasMany(VendorVerification::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function verifier(): BelongsTo
     {
         return $this->belongsTo(User::class, 'verified_by');

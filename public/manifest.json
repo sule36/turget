@@ -1,0 +1,21 @@
+{
+  "id": "/?source=pwa",
+  "name": "Turget.id — Platform Wisata Terverifikasi Indonesia",
+  "short_name": "Turget.id",
+  "description": "Platform ekosistem pariwisata terverifikasi #1 di Indonesia. Temukan tour guide lokal berlisensi, paket petualangan autentik, dan vendor terpercaya dengan garansi Escrow.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07121D",
+  "theme_color": "#0B2545",
+  "categories": ["travel", "tourism", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

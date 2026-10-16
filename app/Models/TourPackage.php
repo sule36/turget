@@ -49,6 +49,11 @@ class TourPackage extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function vendorAddons(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(VendorProduct::class, 'package_vendor_addons')

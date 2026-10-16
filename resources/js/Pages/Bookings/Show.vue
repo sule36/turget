@@ -14,6 +14,26 @@ const showRefundModal = ref(false);
 const refundReason = ref('');
 const isSubmitting = ref(false);
 
+const reviewRating = ref(5);
+const reviewComment = ref('');
+const isSubmittingReview = ref(false);
+
+function submitReview() {
+    if (!reviewRating.value) {
+        alert(locale.value === 'id' ? 'Silakan pilih rating bintang 1-5.' : 'Please select star rating.');
+        return;
+    }
+    isSubmittingReview.value = true;
+    router.post(`/bookings/${props.booking.id}/review`, {
+        rating: reviewRating.value,
+        comment: reviewComment.value,
+    }, {
+        onFinish: () => {
+            isSubmittingReview.value = false;
+        },
+    });
+}
+
 function completeTrip() {
     if (confirm(locale.value === 'id' ? 'Konfirmasi bahwa perjalanan telah selesai dengan baik? Dana akan langsung dilepaskan dari escrow ke saldo pemandu wisata.' : 'Confirm trip completed? Escrow funds will be released to the guide.')) {
         router.post(`/bookings/${props.booking.id}/complete`);
@@ -44,11 +64,20 @@ function submitRefund() {
 
         <div style="background: var(--color-surface-subtle); padding: 3rem 0 6rem;">
             <div class="turget-container" style="max-width: 920px;">
-                <!-- Breadcrumb -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <Link href="/my-bookings" class="turget-btn turget-btn-secondary" style="font-size: 0.88rem;">
-                        ← {{ locale === 'id' ? 'Kembali ke Pesanan Saya' : 'Back to My Bookings' }}
-                    </Link>
+                <!-- Breadcrumb & Top Actions -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <Link href="/my-bookings" class="turget-btn turget-btn-secondary" style="font-size: 0.88rem;">
+                            ← {{ locale === 'id' ? 'Pesanan Saya' : 'My Bookings' }}
+                        </Link>
+                        <Link
+                            :href="`/bookings/${booking.id}/voucher`"
+                            class="turget-btn"
+                            style="font-size: 0.88rem; background: var(--color-blue-50); color: var(--color-blue-600); border: 1px solid var(--color-blue-200); font-weight: 600;"
+                        >
+                            📄 {{ locale === 'id' ? 'Cetak E-Voucher Resmi' : 'Official E-Voucher' }}
+                        </Link>
+                    </div>
 
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span class="turget-badge" style="background: var(--color-blue-50); color: var(--color-blue-600); font-weight: 700; margin: 0;">
@@ -66,6 +95,90 @@ function submitRefund() {
                         >
                             ● {{ booking.status?.toUpperCase() }}
                         </span>
+                    </div>
+                </div>
+
+                <!-- REVIEW & RATING CARD (When Trip is Completed) -->
+                <div v-if="booking.status === 'completed'" style="background: white; border-radius: var(--radius-xl); padding: 2rem 2.5rem; box-shadow: var(--shadow-sm); border: 2px solid var(--color-blue-100); margin-bottom: 2rem;">
+                    <!-- If already reviewed -->
+                    <div v-if="booking.review">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="turget-badge" style="background: #ECFDF5; color: #065F46; border-color: #A7F3D0; margin: 0;">
+                                    ✓ Ulasan Anda Telah Terbit
+                                </span>
+                                <span style="color: #F59E0B; font-size: 1.1rem; font-weight: 700;">
+                                    {{ '★'.repeat(booking.review.rating) }}{{ '☆'.repeat(5 - booking.review.rating) }}
+                                </span>
+                                <span style="font-weight: 700; color: var(--color-navy-950);">
+                                    ({{ booking.review.rating }}/5)
+                                </span>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--color-text-subtle);">
+                                Diterbitkan pada {{ new Date(booking.review.created_at).toLocaleDateString() }}
+                            </span>
+                        </div>
+                        <p v-if="booking.review.comment" style="font-size: 0.95rem; color: var(--color-navy-950); line-height: 1.6; margin: 0; background: var(--color-surface-subtle); padding: 1rem 1.25rem; border-radius: var(--radius-lg); font-style: italic;">
+                            "{{ booking.review.comment }}"
+                        </p>
+                    </div>
+
+                    <!-- If not yet reviewed -->
+                    <div v-else>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 1.5rem;">⭐</span>
+                            <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--color-navy-950); margin: 0;">
+                                {{ locale === 'id' ? 'Beri Ulasan & Rating Pemandu / Vendor' : 'Rate & Review Your Experience' }}
+                            </h3>
+                        </div>
+                        <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 1.25rem;">
+                            {{ locale === 'id'
+                                ? 'Bagikan pengalaman autentik Anda. Ulasan terverifikasi Anda sangat berharga bagi pemandu lokal dan wisatawan lainnya.'
+                                : 'Share your authentic experience. Verified feedback helps local guides and travelers.' }}
+                        </p>
+
+                        <!-- Star Rating Selector -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                            <span style="font-size: 0.88rem; font-weight: 600; color: var(--color-navy-950);">Rating Bintang:</span>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <button
+                                    v-for="star in 5"
+                                    :key="star"
+                                    type="button"
+                                    @click="reviewRating = star"
+                                    style="background: none; border: none; font-size: 1.75rem; cursor: pointer; color: star <= reviewRating ? '#F59E0B' : '#D1D5DB'; transition: transform 0.15s;"
+                                    :title="`${star} Bintang`"
+                                >
+                                    ★
+                                </button>
+                            </div>
+                            <span style="font-weight: 700; color: #D97706; margin-left: 0.5rem; font-size: 1rem;">
+                                {{ reviewRating }} / 5 Bintang
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 1.25rem;">
+                            <label class="turget-label" style="font-weight: 700; margin-bottom: 0.4rem; display: block;">
+                                {{ locale === 'id' ? 'Tulis Ulasan / Testimoni Anda (Opsional):' : 'Write Your Review (Optional):' }}
+                            </label>
+                            <textarea
+                                v-model="reviewComment"
+                                rows="3"
+                                class="turget-input"
+                                :placeholder="locale === 'id' ? 'Ceritakan keramahan pemandu, ketepatan waktu, kebersihan fasilitas, atau momen terbaik perjalanan Anda...' : 'Share details about guide hospitality, punctuality, or memorable moments...'"
+                                style="border-radius: var(--radius-lg); padding: 0.85rem 1.15rem;"
+                            ></textarea>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="turget-btn turget-btn-primary"
+                            :disabled="isSubmittingReview"
+                            @click="submitReview"
+                            style="font-weight: 700; padding: 0.75rem 1.5rem;"
+                        >
+                            {{ isSubmittingReview ? 'Mengirim...' : (locale === 'id' ? 'Kirim Ulasan Terverifikasi ➔' : 'Submit Review ➔') }}
+                        </button>
                     </div>
                 </div>
 
